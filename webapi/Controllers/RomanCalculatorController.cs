@@ -37,4 +37,11 @@ public class RomanCalculatorController : ControllerBase
 
         return DDdata;
     }
+
+    [HttpGet(Name = "GetSum")]
+    public JsonResult GetSum()
+    {
+        JsonResult res = new JsonResult("controller");
+        return res;
+    }
 }

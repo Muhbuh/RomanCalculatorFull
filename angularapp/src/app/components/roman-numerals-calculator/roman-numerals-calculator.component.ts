@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IDropDownData } from '../roman-numerals-dropdownlist/dropdowndata.interface';
 import { HttpClient } from '@angular/common/http';
+import { BaseRouteReuseStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-roman-numerals-calculator',
@@ -18,13 +19,23 @@ export class RomanNumeralsCalculatorComponent {
   @Input('f3Label') Field3Label = "Result:";
 
   @Input('f3ReadOnly') Field3ReadOnly = true;
+  @Input('f3Value') Field3Value = "Test";
 
   /*  @Input('ddata') DDData: Array<IDropDownData> =[{ id: 1, text: "Roman" }, { id: 2, text: "Arabic" }];*/
   public DDData: Array<IDropDownData> = [];
+  private HTTP: HttpClient;
 
   constructor(http: HttpClient) {
+    this.HTTP = http;
     http.get<Array<IDropDownData>>('/RomanCalculator/GetDropDownData').subscribe(result => {
       this.DDData = result;
+    }, error => console.error(error));
+  }
+
+  public onTest() {
+    this.HTTP.get<string>('/RomanCalculator/GetSum').subscribe(result => {
+      console.log(result);
+      this.Field3Value = result;
     }, error => console.error(error));
   }
 }
