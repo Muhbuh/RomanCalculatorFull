@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using webapi.Interface;
 
 namespace webapi.Controllers;
 
@@ -14,14 +15,8 @@ public class RomanCalculatorController : ControllerBase
     }
 
     [HttpGet(Name = "GetDropDownData")]
-    public IEnumerable<WeatherForecast> GetDropDownData()
+    public IEnumerable<DropDownData> GetDropDownData()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        return null;
     }
 }
