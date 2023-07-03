@@ -2,7 +2,7 @@
 {
     public class DropDownData
     {
-        int id { get; set; }
-        string test { get; set; }
+        public int id { get; set; }
+        public string text { get; set; }
     }
 }
