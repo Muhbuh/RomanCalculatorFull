@@ -5,7 +5,7 @@ using webapi.Interface;
 namespace webapi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class RomanCalculatorController : ControllerBase
 {
     private readonly ILogger<RomanCalculatorController> _logger;
@@ -21,7 +21,7 @@ public class RomanCalculatorController : ControllerBase
     }
 
     [HttpGet(Name = "GetDropDownData")]
-    public IEnumerable<DropDownData> Get()
+    public IEnumerable<DropDownData> GetDropDownData()
     {
 
         if(DDdata != null)

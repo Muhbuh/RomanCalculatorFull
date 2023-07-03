@@ -23,7 +23,7 @@ export class RomanNumeralsCalculatorComponent {
   public DDData: Array<IDropDownData> = [];
 
   constructor(http: HttpClient) {
-    http.get<Array<IDropDownData>>('/RomanCalculator').subscribe(result => {
+    http.get<Array<IDropDownData>>('/RomanCalculator/GetDropDownData').subscribe(result => {
       this.DDData = result;
     }, error => console.error(error));
   }
