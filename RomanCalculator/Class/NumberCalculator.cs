@@ -1,6 +1,7 @@
 ﻿using RomanCalculator.Interface;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,30 +36,59 @@ namespace RomanCalculator.Class
 
             string _tmp = summand2[summand2.Length - 1].ToString();
 
-            switch (_tmp)
+            InsertValueIntoResult(summand1, _tmp);
+
+            while (summand2 != "")
             {
-                case "I":
-                    summand1 = AddRomanOne(summand1);
-                    break;
-                case "X":
-                case "C":
-                case "M":
-                    break;
-                case "V":
-                    summand1 = AddRomanFive(summand1);
-                    break;
-                case "L":
-                    summand1 = AddRomanOne(summand1);
-                    break;
-                case "D":
-                    summand1 = AddRomanOne(summand1);
-                    break;
-                    break;
-                default:
-                    throw new Exception($"The letter {_tmp} is not a valid roman numeral");
+                switch (_tmp)
+                {
+                    case "I":
+                        summand1 = AddRomanOne(summand1);
+                        break;
+                    case "X":
+                    case "C":
+                    case "M":
+                        break;
+                    case "V":
+                        summand1 = AddRomanFive(summand1);
+                        break;
+                    case "L":
+                        summand1 = AddRomanOne(summand1);
+                        break;
+                    case "D":
+                        summand1 = AddRomanOne(summand1);
+                        break;
+                    default:
+                        throw new Exception($"The letter {_tmp} is not a valid roman numeral");
+                }
+
+                summand2 = summand2.Remove(summand2.Length - 1); 
             }
 
             return summand1;
+        }
+
+        /// <summary>
+        /// Check at which space the symbol needs to inserted into the string
+        /// The symbol will be inserted write next to a copy of itself
+        /// If no copy is found the string is searched for the next smaller value
+        /// If no match is found the symbol is appended to the string
+        /// </summary>
+        /// <param name="summand"></param>
+        /// <param name="symbol"></param>
+        /// <returns></returns>
+        public string InsertValueIntoResult(string summand, string symbol)
+        {
+            for (int i = ValidSymbols.IndexOf(symbol); i < ValidSymbols.Count; i++)
+            {
+                if (summand.Contains(ValidSymbols[i]))
+                {
+                    string _tmp = summand.Substring(summand.IndexOf(ValidSymbols[i]));
+                    return summand.Replace(_tmp, symbol + _tmp);
+                }
+            }
+
+            return summand + symbol;
         }
 
         /// <summary>
