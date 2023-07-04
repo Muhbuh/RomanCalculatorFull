@@ -13,21 +13,12 @@ namespace RomanCalculator.Interface
     /// </summary>
     internal interface NumeralCheck
     {
-        /// <summary>
-        /// Flag wether or not the value of each symbol descends from left to right
-        /// Staying the same value is always valid
-        /// </summary>
-        public bool ValueDescends { get; set; }
 
         /// <summary>
         /// List of valid symbols in the numeral string
+        /// The value i can be followed by any value with an higher index but not the other way around
         /// </summary>
         public List<string> ValidSymbols { get; set; }
-
-        /// <summary>
-        /// List of valid symbol combinations e.g. IV or IX
-        /// </summary>
-        public List<string> ValidCombinations  { get; set; }
 
         /// <summary>
         /// Initiate the configuration of the numeral system
@@ -35,7 +26,7 @@ namespace RomanCalculator.Interface
         /// <param name="_ValidSymbols"></param>
         /// <param name="_ValidCombinations"></param>
         /// <param name="_ValueDescends"></param>
-        public void Init(List<string> _ValidSymbols, List<string> _ValidCombinations, bool _ValueDescends);
+        public void Init(List<string> _ValidSymbols);
 
         /// <summary>
         /// 

@@ -1,4 +1,5 @@
 ﻿using RomanCalculator.Interface;
+using System.Linq;
 
 namespace RomanCalculator.Class
 {
@@ -8,31 +9,59 @@ namespace RomanCalculator.Class
     /// </summary>
     public class NumberCheck : NumeralCheck
     {
-        public bool ValueDescends { get; set; }
         public List<string> ValidSymbols { get; set; }
-        public List<string> ValidCombinations { get; set; }
 
-        bool NumeralCheck.CheckNumeral(string number)
+        public bool CheckNumeral(string number)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < number.Length; i++)
+            {
+                string _tmp = number[i].ToString();
+
+                if (!ValidSymbols.Contains(_tmp))
+                {
+                    return false;
+                }
+
+                // Check if this was the last symbol
+                if (i < number.Length - 1)
+                {
+                    // If not the last symbol check if next symbol is NOT the same or a valid following symbol (right of the current symbol)
+                    if (ValidSymbols.IndexOf(_tmp) > ValidSymbols.IndexOf(number[i + 1].ToString()))
+                    {
+                        // Create combined symbol
+                        _tmp = _tmp + number[i + 1].ToString();
+
+                        // The next symbol is left of the current one, check if this symbol combined with the next one is valid e.g. I + V = IV
+                        if (!ValidSymbols.Contains(_tmp))
+                        {
+                            return false;
+                        }
+
+                        // Check if symbol after combined is right of the current symbol. Another combined symbol would not be valid, so no need to check
+                        if (i < number.Length - 2)
+                        {
+                            // After a combined value the next valid value shifts by 3
+                            if (ValidSymbols.IndexOf(_tmp) >= ValidSymbols.IndexOf(number[i + 2].ToString())-3)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            return true;
         }
 
-        void NumeralCheck.Init(List<string> _ValidSymbols, List<string> _ValidCombinations, bool _ValueDescends)
+        public void Init(List<string> _ValidSymbols)
         {
             if (_ValidSymbols == null || _ValidSymbols.Count == 0)
             {
                 throw new ArgumentException("The list of valid symbols is either no defined or empty", nameof(_ValidSymbols));
             }
 
-            if (_ValidSymbols == null)
-            {
-                // It is also possible to accept null and create a new list. For now I want it to be explicit
-                throw new ArgumentException("The list of valid combinations is not defined", nameof(_ValidSymbols));
-            }
-
             ValidSymbols = _ValidSymbols;
-            ValidCombinations = _ValidCombinations;
-            ValueDescends = _ValueDescends;
         }
     }
 }
