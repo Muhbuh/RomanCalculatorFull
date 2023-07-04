@@ -11,6 +11,8 @@ namespace RomanCalculator.Class
     {
         public List<string> ValidSymbols { get; set; }
 
+        public List<int> MaximumNumberOfRepeats { get; set; }
+
         public bool CheckNumeral(string number)
         {
             for (int i = 0; i < number.Length; i++)
@@ -18,6 +20,12 @@ namespace RomanCalculator.Class
                 string _tmp = number[i].ToString();
 
                 if (!ValidSymbols.Contains(_tmp))
+                {
+                    return false;
+                }
+
+                // Check if the valid symbol occurs more than the maximum amount of times
+                if (number.Contains(new string(number[i], MaximumNumberOfRepeats[ValidSymbols.IndexOf(_tmp)] + 1)))
                 {
                     return false;
                 }
@@ -41,7 +49,7 @@ namespace RomanCalculator.Class
                         if (i < number.Length - 2)
                         {
                             // After a combined value the next valid value shifts by 3
-                            if (ValidSymbols.IndexOf(_tmp) >= ValidSymbols.IndexOf(number[i + 2].ToString())-3)
+                            if (ValidSymbols.IndexOf(_tmp) >= ValidSymbols.IndexOf(number[i + 2].ToString()) - 3)
                             {
                                 return false;
                             }
@@ -54,14 +62,20 @@ namespace RomanCalculator.Class
             return true;
         }
 
-        public void Init(List<string> _ValidSymbols)
+        public void Init(List<string> _ValidSymbols, List<int> _MaximumNumberOfRepeats)
         {
             if (_ValidSymbols == null || _ValidSymbols.Count == 0)
             {
                 throw new ArgumentException("The list of valid symbols is either no defined or empty", nameof(_ValidSymbols));
             }
 
+            if (_MaximumNumberOfRepeats == null || _ValidSymbols.Count != _MaximumNumberOfRepeats.Count)
+            {
+                throw new ArgumentException("The list of maximum repeats is either no defined or does not have the same length as the valid symbol list", nameof(_ValidSymbols));
+            }
+
             ValidSymbols = _ValidSymbols;
+            MaximumNumberOfRepeats = _MaximumNumberOfRepeats;
         }
     }
 }
