@@ -6,10 +6,40 @@ using System.Threading.Tasks;
 
 namespace RomanCalculator.Interface
 {
-    internal interface NumberConversion
+    internal interface NumeralConverter
     {
+        // In the long term it would be better to create a configuration class and use a JSON config file
+
+        /// <summary>
+        /// List of valid symbols in the numeral string
+        /// The value i can be followed by any value with an higher index but not the other way around
+        /// </summary>
+        public List<string> ValidSymbols { get; set; }
+
+        /// <summary>
+        /// List with the values for the valid symbols. List must have same length
+        /// </summary>
+        public List<int> SymbolValues { get; set; }
+
+        /// <summary>
+        /// Convert a number as symbols to interger
+        /// </summary>
+        /// <param name="Number"></param>
+        /// <returns></returns>
         public int ConvertStringToInt(string Number);
 
+        /// <summary>
+        /// Converts an Integer into the symbol represantation
+        /// </summary>
+        /// <param name="Number"></param>
+        /// <returns></returns>
         public string ConvertIntToString(int Number);
+
+        /// <summary>
+        /// Initialize class
+        /// </summary>
+        /// <param name="_ValidSymbols"></param>
+        /// <param name="_SymbolValues"></param>
+        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues);
     }
 }

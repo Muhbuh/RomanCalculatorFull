@@ -17,7 +17,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralSimpleTrue()
+        public void TestCheckNumeralSimpleTrue()
         {
             List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
 
@@ -28,7 +28,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralSimpleFalse()
+        public void TestCheckNumeralSimpleFalse()
         {
             List<string> TestCases = new List<string>() { "A", "B", "E", "W", "Y", "Z" };
 
@@ -39,7 +39,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralConcatedTrue()
+        public void TestCheckNumeralConcatedTrue()
         {
             List<string> TestCases = new List<string>() { "MDCLXVI", "MMMDXXXIII", "CIV", "CIX", "CML", "XIV", "MMMCMXCIX", "XCV", "CMX", "CMIV" };
 
@@ -51,7 +51,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralConcatedFalse()
+        public void TestCheckNumeralConcatedFalse()
         {
             List<string> TestCases = new List<string>() { "MDCLVXI", "MMMDXMXXIII", "CIVD", "CIM", "CMD", "XIL", "MMMCVXCIX", "XCX", "CMC", "CMCD" };
 
@@ -63,7 +63,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralRepeatsTrue()
+        public void TestCheckNumeralRepeatsTrue()
         {
             List<string> TestCases = new List<string>() { "MMM", "CM", "D", "CD", "CCC", "XC", "L", "XL", "XXX", "IX", "V", "IV", "III" };
 
@@ -74,7 +74,7 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
-        public void TestNCheckNumeralRepeatFalse()
+        public void TestCheckNumeralRepeatFalse()
         {
             List<string> TestCases = new List<string>() { "MMMM", "CMCM", "DD", "CDCD", "CCCC", "XCXC", "LL", "XLXL", "XXXX", "IXIX", "VV", "IVIV", "IIII" };
 

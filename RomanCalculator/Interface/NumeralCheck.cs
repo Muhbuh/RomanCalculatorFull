@@ -30,8 +30,7 @@ namespace RomanCalculator.Interface
         /// Initiate the configuration of the numeral system
         /// </summary>
         /// <param name="_ValidSymbols"></param>
-        /// <param name="_ValidCombinations"></param>
-        /// <param name="_ValueDescends"></param>
+        /// <param name="_MaximumNumberOfRepeats"></param>
         public void Init(List<string> _ValidSymbols, List<int> _MaximumNumberOfRepeats);
 
         /// <summary>

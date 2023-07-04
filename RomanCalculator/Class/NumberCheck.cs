@@ -71,7 +71,7 @@ namespace RomanCalculator.Class
 
             if (_MaximumNumberOfRepeats == null || _ValidSymbols.Count != _MaximumNumberOfRepeats.Count)
             {
-                throw new ArgumentException("The list of maximum repeats is either no defined or does not have the same length as the valid symbol list", nameof(_ValidSymbols));
+                throw new ArgumentException("The list of maximum repeats is either no defined or does not have the same length as the valid symbol list", nameof(_MaximumNumberOfRepeats));
             }
 
             ValidSymbols = _ValidSymbols;
