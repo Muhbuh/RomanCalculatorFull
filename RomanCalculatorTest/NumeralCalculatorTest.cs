@@ -96,6 +96,36 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
+        public void TestAddFifty()
+        {
+            List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "VIII", "CMXCV", "XCV" };
+            List<string> Expected = new List<string>() { "MD", "MCD", "M", "CM", "DC", "DXC", "DL", "DXL", "DX", "DIX", "DV", "DIV", "DI", "DII", "DIII", "DVIII", "MCDXCV", "DXCV" };
+
+            Console.WriteLine("Test : Result : Expected");
+            for (int i = 0; i < TestCases.Count; i++)
+            {
+                string result = Calculator.Addition(TestCases[i], "D");
+                Console.WriteLine(TestCases[i] + " : " + result + " : " + Expected[i]);
+                Assert.AreEqual(result, Expected[i]);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddFivehundred()
+        {
+            List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "VIII", "CMXCV", "XCV" };
+            List<string> Expected = new List<string>() { "ML", "CML", "DL", "CDL", "CL", "CXL", "C", "XC", "LX", "LIX", "LV", "LIV", "LI", "LII", "LIII", "LVIII", "MXLV", "CXLV" };
+
+            Console.WriteLine("Test : Result : Expected");
+            for (int i = 0; i < TestCases.Count; i++)
+            {
+                string result = Calculator.Addition(TestCases[i], "L");
+                Console.WriteLine(TestCases[i] + " : " + result + " : " + Expected[i]);
+                Assert.AreEqual(result, Expected[i]);
+            }
+        }
+
+        [TestMethod]
         public void TestAddInsertValueIntoResult()
         {
             List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "VIII", "CMXCV", "XCV", "XCXL", "CXLV" };

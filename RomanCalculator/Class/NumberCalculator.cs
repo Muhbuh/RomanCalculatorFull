@@ -71,8 +71,10 @@ namespace RomanCalculator.Class
                         summand1 = CascadeFive(summand1);
                         break;
                     case "L":
+                        summand1 = CascadeFifty(summand1);
                         break;
                     case "D":
+                        summand1 = CascadeFiveHundred(summand1);
                         break;
                     default:
                         throw new Exception($"The letter {_tmp} is not a valid roman numeral");
@@ -80,6 +82,52 @@ namespace RomanCalculator.Class
             }
 
             return summand1;
+        }
+
+        private string CascadeFiveHundred(string summand)
+        {
+            if (summand.Contains("DD"))
+            {
+                summand = summand.Replace("DD", "M");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("DCD"))
+            {
+                summand = summand.Replace("DCD", "CM");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("DCM"))
+            {
+                summand = summand.Replace("DCM", "MCD");
+                return CascadeHundred(summand);
+            }
+
+            return summand;
+        }
+
+        private string CascadeFifty(string summand)
+        {
+            if (summand.Contains("LL"))
+            {
+                summand = summand.Replace("LL", "C");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("LXL"))
+            {
+                summand = summand.Replace("LXL", "XC");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("LXC"))
+            {
+                summand = summand.Replace("LXC", "CXL");
+                return CascadeHundred(summand);
+            }
+
+            return summand;
         }
 
         private string CascadeFive(string summand)
@@ -98,7 +146,8 @@ namespace RomanCalculator.Class
 
             if (summand.Contains("VIX"))
             {
-                return summand.Replace("VIX","XIV");
+                summand = summand.Replace("VIX","XIV");
+                CascadeTen(summand);
             }
 
             return summand;
