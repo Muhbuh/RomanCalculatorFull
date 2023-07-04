@@ -86,11 +86,11 @@ namespace RomanCalculatorTest
             List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "VIII", "CMXCV", "XCV" };
             List<string> Expected = new List<string>() { "MV", "CMV", "DV", "CDV", "CV", "XCV", "LV", "XLV", "XV", "XIV", "X", "IX", "VI", "VII", "VIII", "XIII", "M", "C" };
 
+            Console.WriteLine("Test : Result : Expected");
             for (int i = 0; i < TestCases.Count; i++)
             {
-                //Console.WriteLine(TestCases[i]);
                 string result = Calculator.Addition(TestCases[i], "V");
-                //Console.WriteLine(result + " : " + Expected[i]);
+                Console.WriteLine(TestCases[i] + " : " + result + " : " + Expected[i]);
                 Assert.AreEqual(result, Expected[i]);
             }
         }

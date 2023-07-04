@@ -39,6 +39,9 @@ namespace RomanCalculator.Class
             summand1 = summand1.ToUpper();
             summand2 = summand2.ToUpper();
 
+            // Replacing the combined values result in less cases to consider in exchange for additional loops
+            summand2 = summand2.Replace("IV", "IIII").Replace("IX","VIIII").Replace("XL","XXXX").Replace("XC","LXXXX").Replace("CD","CCCC").Replace("CM","DCCCC");
+
             while (summand2 != "")
             {
                 string _tmp = summand2[summand2.Length - 1].ToString();
@@ -65,13 +68,11 @@ namespace RomanCalculator.Class
                         summand1 = CascadeHundred(summand1);
                         break;
                     case "V":
-                        summand1 = AddRomanFive(summand1);
+                        summand1 = CascadeFive(summand1);
                         break;
                     case "L":
-                        summand1 = AddRomanOne(summand1);
                         break;
                     case "D":
-                        summand1 = AddRomanOne(summand1);
                         break;
                     default:
                         throw new Exception($"The letter {_tmp} is not a valid roman numeral");
@@ -81,6 +82,33 @@ namespace RomanCalculator.Class
             return summand1;
         }
 
+        private string CascadeFive(string summand)
+        {
+            if(summand.Contains("VV"))
+            {
+                summand = summand.Replace("VV","X");
+                return CascadeTen(summand);
+            }
+
+            if (summand.Contains("VIV"))
+            {
+                summand = summand.Replace("VIV", "IX");
+                return CascadeTen(summand);
+            }
+
+            if (summand.Contains("VIX"))
+            {
+                return summand.Replace("VIX","XIV");
+            }
+
+            return summand;
+        }
+
+        /// <summary>
+        /// Deal with cascade induced by the value I
+        /// </summary>
+        /// <param name="summand"></param>
+        /// <returns></returns>
         private string CascadeOne(string summand)
         {
             if (summand.Contains("IIV"))
@@ -108,20 +136,13 @@ namespace RomanCalculator.Class
             return summand;
         }
 
+        /// <summary>
+        /// Deal with cascade induced by the value X
+        /// </summary>
+        /// <param name="summand"></param>
+        /// <returns></returns>
         private string CascadeTen(string summand)
         {
-            // Fix wrong formating
-            if (summand.Contains("IXX"))
-            {
-                return summand.Replace("IXX", "XIX");
-            }
-
-            // Fix wrong formating
-            if (summand.Contains("IXV"))
-            {
-                return summand.Replace("IXV", "XIV");
-            }
-
             if (summand.Contains("XXL"))
             {
                 summand = summand.Replace("XXL", "L");
@@ -153,20 +174,13 @@ namespace RomanCalculator.Class
             return summand;
         }
 
+        /// <summary>
+        /// Deal with cascade induced by the value C
+        /// </summary>
+        /// <param name="summand"></param>
+        /// <returns></returns>
         private string CascadeHundred(string summand)
         {
-            // Fix wrong formating
-            if (summand.Contains("XCC"))
-            {
-                return summand.Replace("XCC", "CXC");
-            }
-
-            // Fix wrong formating
-            if (summand.Contains("XCL"))
-            {
-                return summand.Replace("XCL", "CXL");
-            }
-
             if (summand.Contains("CCD"))
             {
                 summand = summand.Replace("CCD", "D");
@@ -227,132 +241,6 @@ namespace RomanCalculator.Class
             }
 
             return summand + symbol;
-        }
-
-        /// <summary>
-        /// This method adds a roman 1 to the string
-        /// </summary>
-        /// <param name="summand1"></param>
-        /// <returns></returns>
-        private string AddRomanOne(string summand)
-        {
-            string _block = GetLastSymbolBlock(summand);
-
-            // If no I is contained in the last block, one can be appended
-            if (!_block.Contains("IV") && !_block.Contains("IX") && !_block.Contains("III"))
-            {
-                summand += "I";
-                return summand;
-            }
-
-            // IV can only be replaced by V
-            if (_block.Contains("IV"))
-            {
-                summand = summand.Replace("IV", "V");
-                return summand;
-            }
-
-            // Check if a cascade is started where XC has to be replaced
-            if (_block.Contains("IX"))
-            {
-                // Replace 999 with 1000
-                if (summand.Contains("CMXC"))
-                {
-                    summand = summand.Replace("CMXCIX", "M");
-                }
-                // Replace 99 with 1000
-                else if (summand.Contains("XC"))
-                {
-                    summand = summand.Replace("XCIX", "C");
-                }
-                // Replace 9 with 10
-                else
-                {
-                    summand = summand.Replace("IX", "X");
-                }
-            }
-
-            // If a III is contained check wether IV or IX musst be set
-            if (_block.Contains("III"))
-            {
-                if (_block[0].ToString() == "V")
-                {
-                    summand = summand.Replace(_block, "IX");
-                }
-                else
-                {
-                    summand = summand.Replace(_block, "IV");
-                }
-                return summand;
-            }
-
-            return summand;
-        }
-
-        /// <summary>
-        /// Method to add a roman 5 to the string
-        /// </summary>
-        /// <param name="summand1"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private string AddRomanFive(string summand)
-        {
-            if (summand.Contains("IV"))
-            {
-                return summand.Replace("IV", "IX");
-            }
-            else if (summand.Contains("IX"))
-            {
-                return summand.Replace("IX", "XIV");
-            }
-            // Check for cascade
-            else if (summand.Contains("V"))
-            {
-                // Replace 995 with 1000
-                if (summand.Contains("CMXCV"))
-                {
-                    summand = summand.Replace("CMXCV", "M");
-                }
-                else if (summand.Contains("XCV"))
-                {
-                    summand = summand.Replace("XCV", "C");
-                }
-                else
-                {
-                    summand = summand.Replace("V", "X");
-                }
-                return summand;
-            }
-            else if (summand.Contains("I"))
-            {
-                int firstI = summand.IndexOf("I");
-                return summand.Replace(summand.Substring(firstI), "V" + summand.Substring(firstI));
-            }
-            // neither 4 nor 5 means V can be appended
-            else
-            {
-                return summand + "V";
-            }
-        }
-
-        private string GetLastSymbolBlock(string summand)
-        {
-            // A roman block cannot contain more than four symbols, e.g. VIII
-            // The symbol M is ignored as a special case
-            if (summand.All(x => x == 'M'))
-            {
-                return summand;
-            }
-
-            summand.Substring(Math.Max(0, summand.Length - 4));
-
-            // Check if the last value is a combined one, e.g. IV
-            if (CombinedValues.Contains(summand.Substring(Math.Max(0, summand.Length - 2))))
-            {
-                return summand.Substring(Math.Max(0, summand.Length - 2));
-            }
-
-            return summand;
         }
     }
 }
