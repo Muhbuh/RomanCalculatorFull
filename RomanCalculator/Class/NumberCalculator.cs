@@ -15,6 +15,11 @@ namespace RomanCalculator.Class
     public class NumberCalculator : NumeralCalculator
     {
         /// <summary>
+        /// List of valid symbols
+        /// </summary>
+        List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+
+        /// <summary>
         /// A list containing all combined values
         /// </summary>
         internal List<string> CombinedValues = new List<string>() { "IV", "IX", "XL", "XC", "CD", "CM" };
