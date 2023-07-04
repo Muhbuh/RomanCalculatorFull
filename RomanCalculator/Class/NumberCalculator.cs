@@ -39,12 +39,19 @@ namespace RomanCalculator.Class
             summand1 = summand1.ToUpper();
             summand2 = summand2.ToUpper();
 
-            string _tmp = summand2[summand2.Length - 1].ToString();
-
-            summand1 = InsertValueIntoResult(summand1, _tmp);
-
             while (summand2 != "")
             {
+                string _tmp = summand2[summand2.Length - 1].ToString();
+                summand2 = summand2.Remove(summand2.Length - 1);
+
+                if (_tmp == "M")
+                {
+                    summand1 = "M" + summand1;
+                    continue;
+                }
+
+                summand1 = InsertValueIntoResult(summand1, _tmp);
+
                 switch (_tmp)
                 {
                     case "I":
@@ -52,8 +59,10 @@ namespace RomanCalculator.Class
                         summand1 = CascadeOne(summand1);
                         break;
                     case "X":
+                        summand1 = CascadeTen(summand1);
+                        break;
                     case "C":
-                    case "M":
+                        summand1 = CascadeHundred(summand1);
                         break;
                     case "V":
                         summand1 = AddRomanFive(summand1);
@@ -67,8 +76,6 @@ namespace RomanCalculator.Class
                     default:
                         throw new Exception($"The letter {_tmp} is not a valid roman numeral");
                 }
-
-                summand2 = summand2.Remove(summand2.Length - 1); 
             }
 
             return summand1;
@@ -92,8 +99,8 @@ namespace RomanCalculator.Class
             {
                 return summand.Replace("VIIII", "IX");
             }
-            
-            if(summand.Contains("IIII"))
+
+            if (summand.Contains("IIII"))
             {
                 return summand.Replace("IIII", "IV");
             }
@@ -103,6 +110,18 @@ namespace RomanCalculator.Class
 
         private string CascadeTen(string summand)
         {
+            // Fix wrong formating
+            if (summand.Contains("IXX"))
+            {
+                return summand.Replace("IXX", "XIX");
+            }
+
+            // Fix wrong formating
+            if (summand.Contains("IXV"))
+            {
+                return summand.Replace("IXV", "XIV");
+            }
+
             if (summand.Contains("XXL"))
             {
                 summand = summand.Replace("XXL", "L");
@@ -136,6 +155,18 @@ namespace RomanCalculator.Class
 
         private string CascadeHundred(string summand)
         {
+            // Fix wrong formating
+            if (summand.Contains("XCC"))
+            {
+                return summand.Replace("XCC", "CXC");
+            }
+
+            // Fix wrong formating
+            if (summand.Contains("XCL"))
+            {
+                return summand.Replace("XCL", "CXL");
+            }
+
             if (summand.Contains("CCD"))
             {
                 summand = summand.Replace("CCD", "D");
@@ -180,7 +211,17 @@ namespace RomanCalculator.Class
             {
                 if (summand.Contains(ValidSymbols[i]))
                 {
-                    string _tmp = summand.Substring(summand.IndexOf(ValidSymbols[i]));
+                    string _tmp;
+                    int index = summand.IndexOf(ValidSymbols[i]);
+                    if (index > 0 && ValidSymbols.Contains(summand.Substring(index - 1, 2)))
+                    {
+                        _tmp = summand.Substring(index-1);
+                    }
+                    else
+                    {
+                        _tmp = summand.Substring(index);
+                    }
+
                     return summand.Replace(_tmp, symbol + _tmp);
                 }
             }
@@ -260,7 +301,7 @@ namespace RomanCalculator.Class
             {
                 return summand.Replace("IV", "IX");
             }
-            else if(summand.Contains("IX"))
+            else if (summand.Contains("IX"))
             {
                 return summand.Replace("IX", "XIV");
             }
