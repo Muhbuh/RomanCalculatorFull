@@ -5,9 +5,9 @@
 
 <app-roman-numerals-dropdownlist [Data] = "DDData"></app-roman-numerals-dropdownlist>
 
-<app-roman-numerals-input-field [label] ="Field1Label"></app-roman-numerals-input-field>
-<app-roman-numerals-input-field [label] ="Field2Label"></app-roman-numerals-input-field>
+<app-roman-numerals-input-field [label] ="Field1Label" (newValueEvent)="getField1Value($event)"></app-roman-numerals-input-field>
+<app-roman-numerals-input-field [label] ="Field2Label" (newValueEvent)="getField2Value($event)"></app-roman-numerals-input-field>
 <app-roman-numerals-input-field [Value] = "Field3Value" [label] ="Field3Label" [readOnly] ="Field3ReadOnly"></app-roman-numerals-input-field>
 
 
-<button (click)="onTest()">Test</button>
+<button (click)="onSum()">Calculate</button>

@@ -15,9 +15,13 @@ export class RomanNumeralsCalculatorComponent {
 
 
   @Input('f1Label') Field1Label = "1st Element:";
-  @Input('f2Label') Field2Label = "2st Element:";
-  @Input('f3Label') Field3Label = "Result:";
+  @Input('f1Value') Field1Value = "";
 
+  @Input('f2Label') Field2Label = "2st Element:"
+  @Input('f2Value') Field2Value = "";
+
+    ;
+  @Input('f3Label') Field3Label = "Result:";
   @Input('f3ReadOnly') Field3ReadOnly = true;
   @Input('f3Value') Field3Value = "Test";
 
@@ -33,10 +37,18 @@ export class RomanNumeralsCalculatorComponent {
     })
   }
 
-  public onTest() {
-    this.HTTP.get<string>('/romancalculator/GetSum').subscribe({
+  public onSum() {
+    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value} }).subscribe({
       next: result => this.Field3Value = result,
       error: error => console.log(error),
     })
+  }
+
+  getField1Value(newItem: string) {
+    this.Field1Value = newItem;
+  }
+
+  getField2Value(newItem: string) {
+    this.Field2Value = newItem;
   }
 }

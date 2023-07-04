@@ -39,7 +39,7 @@ public class RomanCalculatorController : ControllerBase
     }
 
     [HttpGet(Name = "GetSum")]
-    public JsonResult GetSum()
+    public JsonResult GetSum(string summand1 = "", string summand2 = "")
     {
         JsonResult res = new JsonResult("controller");
         return res;

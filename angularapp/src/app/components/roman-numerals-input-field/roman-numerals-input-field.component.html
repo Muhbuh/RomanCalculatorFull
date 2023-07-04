@@ -1,4 +1,4 @@
 <div class="roman-Input-div">
   <label>{{LabelText}}</label>
-  <input type="text" value="{{Value}}" [readonly]="ReadOnly">
+  <input type="text" value="{{Value}}" [readonly]="ReadOnly" #newValue (keyup)="addNewValue(newValue.value)">
 </div>

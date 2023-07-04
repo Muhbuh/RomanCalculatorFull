@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-roman-numerals-input-field',
@@ -16,4 +17,9 @@ export class RomanNumeralsInputFieldComponent {
   }
 
   @Input('readOnly') ReadOnly = false;
+
+  @Output() newValueEvent = new EventEmitter<string>();
+  addNewValue(value: string) {
+    this.newValueEvent.emit(value);
+  }
 }
