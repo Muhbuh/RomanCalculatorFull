@@ -34,16 +34,22 @@ namespace RomanCalculator.Class
         public string Addition(string summand1, string summand2)
         {
 
+            // Safety in case this class is used without the app
+            //Alternatively the NumberCheck cass can be used
+            summand1 = summand1.ToUpper();
+            summand2 = summand2.ToUpper();
+
             string _tmp = summand2[summand2.Length - 1].ToString();
 
-            InsertValueIntoResult(summand1, _tmp);
+            summand1 = InsertValueIntoResult(summand1, _tmp);
 
             while (summand2 != "")
             {
                 switch (_tmp)
                 {
                     case "I":
-                        summand1 = AddRomanOne(summand1);
+                        //summand1 = AddRomanOne(summand1);
+                        summand1 = CascadeOne(summand1);
                         break;
                     case "X":
                     case "C":
@@ -66,6 +72,97 @@ namespace RomanCalculator.Class
             }
 
             return summand1;
+        }
+
+        private string CascadeOne(string summand)
+        {
+            if (summand.Contains("IIV"))
+            {
+                summand = summand.Replace("IIV", "V");
+                return summand;
+            }
+
+            if (summand.Contains("IIX"))
+            {
+                summand = summand.Replace("IIX", "X");
+                return CascadeTen(summand);
+            }
+
+            if (summand.Contains("VIIII"))
+            {
+                return summand.Replace("VIIII", "IX");
+            }
+            
+            if(summand.Contains("IIII"))
+            {
+                return summand.Replace("IIII", "IV");
+            }
+
+            return summand;
+        }
+
+        private string CascadeTen(string summand)
+        {
+            if (summand.Contains("XXL"))
+            {
+                summand = summand.Replace("XXL", "L");
+                return summand;
+            }
+
+            if (summand.Contains("XXC"))
+            {
+                summand = summand.Replace("XXC", "C");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("XCX"))
+            {
+                summand = summand.Replace("XCX", "C");
+                return CascadeHundred(summand);
+            }
+
+            if (summand.Contains("LXXXX"))
+            {
+                return summand.Replace("LXXXX", "XC");
+            }
+
+            if (summand.Contains("XXXX"))
+            {
+                return summand.Replace("XXXX", "XL");
+            }
+
+            return summand;
+        }
+
+        private string CascadeHundred(string summand)
+        {
+            if (summand.Contains("CCD"))
+            {
+                summand = summand.Replace("CCD", "D");
+                return summand;
+            }
+
+            if (summand.Contains("CCM"))
+            {
+                return summand = summand.Replace("CCM", "M");
+            }
+
+            if (summand.Contains("CMC"))
+            {
+                return summand = summand.Replace("CMC", "M");
+            }
+
+            if (summand.Contains("DCCCCC"))
+            {
+                return summand.Replace("DCCCC", "CM");
+            }
+
+            if (summand.Contains("CCCC"))
+            {
+                return summand.Replace("CCCC", "CD");
+            }
+
+            return summand;
         }
 
         /// <summary>
