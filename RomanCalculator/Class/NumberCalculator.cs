@@ -149,18 +149,6 @@ namespace RomanCalculator.Class
                 {
                     summand = summand.Replace("XCV", "C");
                 }
-                else if (summand.Contains("VIII"))
-                {
-                    summand = summand.Replace("VIII", "XIII");
-                }
-                else if (summand.Contains("VII"))
-                {
-                    summand = summand.Replace("VII", "XII");
-                }
-                else if (summand.Contains("VI"))
-                {
-                    summand = summand.Replace("VI", "XI");
-                }
                 else
                 {
                     summand = summand.Replace("V", "X");
