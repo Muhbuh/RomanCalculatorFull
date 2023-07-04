@@ -14,7 +14,27 @@ namespace RomanCalculator.Class
 
         public string ConvertIntToString(int Number)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            while (Number > 0)
+            {
+                for (int i = 0; i <= SymbolValues.Count; i++)
+                {
+                    if(i == SymbolValues.Count)
+                    {
+                        throw new Exception($"Cannot Symbolvalues equal/smaller than the current Number: {Number}");
+                    }
+
+                    if (Number >= SymbolValues[i])
+                    {
+                        sb.Append(ValidSymbols[i]);
+                        Number -= SymbolValues[i];
+                        break;
+                    }
+                }
+            }
+
+            return sb.ToString();
         }
 
         public int ConvertStringToInt(string Number)
