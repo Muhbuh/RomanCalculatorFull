@@ -7,6 +7,10 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularapp", "angularapp\an
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapi", "webapi\webapi.csproj", "{E293AF18-E6B1-45A2-96F1-E04661EE4807}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomanCalculator", "RomanCalculator\RomanCalculator.csproj", "{E4D736E1-BBF4-4039-9CAE-A605DAAAE670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomanCalculatorTest", "RomanCalculatorTest\RomanCalculatorTest.csproj", "{2182B1CD-CD07-4A84-BE96-58313DB8ECB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{E293AF18-E6B1-45A2-96F1-E04661EE4807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E293AF18-E6B1-45A2-96F1-E04661EE4807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E293AF18-E6B1-45A2-96F1-E04661EE4807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4D736E1-BBF4-4039-9CAE-A605DAAAE670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D736E1-BBF4-4039-9CAE-A605DAAAE670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4D736E1-BBF4-4039-9CAE-A605DAAAE670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4D736E1-BBF4-4039-9CAE-A605DAAAE670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2182B1CD-CD07-4A84-BE96-58313DB8ECB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2182B1CD-CD07-4A84-BE96-58313DB8ECB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2182B1CD-CD07-4A84-BE96-58313DB8ECB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2182B1CD-CD07-4A84-BE96-58313DB8ECB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
