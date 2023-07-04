@@ -40,8 +40,14 @@ namespace RomanCalculator.Class
                 case "M":
                     break;
                 case "V":
+                    summand1 = AddRomanFive(summand1);
+                    break;
                 case "L":
+                    summand1 = AddRomanOne(summand1);
+                    break;
                 case "D":
+                    summand1 = AddRomanOne(summand1);
+                    break;
                     break;
                 default:
                     throw new Exception($"The letter {_tmp} is not a valid roman numeral");
@@ -60,24 +66,24 @@ namespace RomanCalculator.Class
             string _block = GetLastSymbolBlock(summand);
 
             // If no I is contained in the last block, one can be appended
-            if(!_block.Contains("IV") && !_block.Contains("IX") && !_block.Contains("III"))
+            if (!_block.Contains("IV") && !_block.Contains("IX") && !_block.Contains("III"))
             {
                 summand += "I";
                 return summand;
             }
 
             // IV can only be replaced by V
-            if(_block.Contains("IV"))
+            if (_block.Contains("IV"))
             {
                 summand = summand.Replace("IV", "V");
                 return summand;
             }
 
             // Check if a cascade is started where XC has to be replaced
-            if(_block.Contains("IX"))
+            if (_block.Contains("IX"))
             {
                 // Replace 999 with 1000
-                if(summand.Contains("CMXC"))
+                if (summand.Contains("CMXC"))
                 {
                     summand = summand.Replace("CMXCIX", "M");
                 }
@@ -110,6 +116,64 @@ namespace RomanCalculator.Class
             return summand;
         }
 
+        /// <summary>
+        /// Method to add a roman 5 to the string
+        /// </summary>
+        /// <param name="summand1"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private string AddRomanFive(string summand)
+        {
+            if (summand.Contains("IV"))
+            {
+                return summand.Replace("IV", "IX");
+            }
+            else if(summand.Contains("IX"))
+            {
+                return summand.Replace("IX", "XIV");
+            }
+            // Check for cascade
+            else if (summand.Contains("V"))
+            {
+                // Replace 995 with 1000
+                if (summand.Contains("CMXCV"))
+                {
+                    summand = summand.Replace("CMXCV", "M");
+                }
+                else if (summand.Contains("XCV"))
+                {
+                    summand = summand.Replace("XCV", "C");
+                }
+                else if (summand.Contains("VIII"))
+                {
+                    summand = summand.Replace("VIII", "XIII");
+                }
+                else if (summand.Contains("VII"))
+                {
+                    summand = summand.Replace("VII", "XII");
+                }
+                else if (summand.Contains("VI"))
+                {
+                    summand = summand.Replace("VI", "XI");
+                }
+                else
+                {
+                    summand = summand.Replace("V", "X");
+                }
+                return summand;
+            }
+            else if (summand.Contains("I"))
+            {
+                int firstI = summand.IndexOf("I");
+                return summand.Replace(summand.Substring(firstI), "V" + summand.Substring(firstI));
+            }
+            // neither 4 nor 5 means V can be appended
+            else
+            {
+                return summand + "V";
+            }
+        }
+
         private string GetLastSymbolBlock(string summand)
         {
             // A roman block cannot contain more than four symbols, e.g. VIII
@@ -122,7 +186,7 @@ namespace RomanCalculator.Class
             summand.Substring(Math.Max(0, summand.Length - 4));
 
             // Check if the last value is a combined one, e.g. IV
-            if(CombinedValues.Contains(summand.Substring(Math.Max(0, summand.Length-2))))
+            if (CombinedValues.Contains(summand.Substring(Math.Max(0, summand.Length - 2))))
             {
                 return summand.Substring(Math.Max(0, summand.Length - 2));
             }
