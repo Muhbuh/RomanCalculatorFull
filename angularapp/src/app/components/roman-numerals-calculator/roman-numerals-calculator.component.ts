@@ -27,13 +27,13 @@ export class RomanNumeralsCalculatorComponent {
 
   constructor(http: HttpClient) {
     this.HTTP = http;
-    http.get<Array<IDropDownData>>('/RomanCalculator/GetDropDownData').subscribe(result => {
+    http.get<Array<IDropDownData>>('/romancalculator/GetDropDownData').subscribe(result => {
       this.DDData = result;
     }, error => console.error(error));
   }
 
   public onTest() {
-    this.HTTP.get<string>('/RomanCalculator/GetSum').subscribe(result => {
+    this.HTTP.get<string>('/romancalculator/GetSum').subscribe(result => {
       console.log(result);
       this.Field3Value = result;
     }, error => console.error(error));
