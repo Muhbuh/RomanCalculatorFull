@@ -126,10 +126,26 @@ namespace RomanCalculatorTest
         }
 
         [TestMethod]
+        public void TestAddition()
+        {
+            List<string> Summand1 = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "CMXCV", "XCV", "MMMCMXCIX" };
+            List<string> Summand2 = new List<string>() { "ML", "CMX", "DV", "CDXIV", "CCC", "CXL", "XX", "XXIV", "LX", "LIX", "IV", "LIV", "XI", "XIV", "LVIII", "MXLV", "CXLV", "MMMCMXCIX" };
+            List<string> Expected = new List<string>() { "MML", "MDCCCX", "MV", "DCCCXIV", "CD", "CCXXX", "LXX", "LXIV", "LXX", "LXVIII", "IX", "LVIII", "XII", "XVI", "LXI", "MMXL", "CCXL", "MMMMMMMCMXCVIII" };
+
+            Console.WriteLine("Summand1 : Summand2 : Result : Expected");
+            for (int i = 0; i < Expected.Count; i++)
+            {
+                string result = Calculator.Addition(Summand1[i], Summand2[i]);
+                Console.WriteLine(Summand1[i] + " : " + Summand2[i] + " : " + result + " : " + Expected[i]);
+                Assert.AreEqual(result, Expected[i]);
+            }
+        }
+
+        [TestMethod]
         public void TestAddInsertValueIntoResult()
         {
             List<string> TestCases = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "VIII", "CMXCV", "XCV", "XCXL", "CXLV" };
-            List<string> Expected = new List<string>() { "MX", "CMX", "DX", "CDX", "CX", "XXC", "LX", "XXL", "XX", "XIX", "XV", "XIV", "XI", "XII", "XIII", "XVIII", "CMXXCV", "XXCV", "XXCXL", "CXXLV"};
+            List<string> Expected = new List<string>() { "MX", "CMX", "DX", "CDX", "CX", "XXC", "LX", "XXL", "XX", "XIX", "XV", "XIV", "XI", "XII", "XIII", "XVIII", "CMXXCV", "XXCV", "XXCXL", "CXXLV" };
 
             Console.WriteLine("Test : Result : Expected");
             for (int i = 0; i < TestCases.Count; i++)

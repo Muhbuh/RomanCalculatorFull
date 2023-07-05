@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +43,9 @@ namespace RomanCalculator.Class
             // Replacing the combined values result in less cases to consider in exchange for additional loops
             summand2 = summand2.Replace("IV", "IIII").Replace("IX","VIIII").Replace("XL","XXXX").Replace("XC","LXXXX").Replace("CD","CCCC").Replace("CM","DCCCC");
 
+            // Increment to prevent infinite loop
+            int SafteyCount = 0;
+
             while (summand2 != "")
             {
                 string _tmp = summand2[summand2.Length - 1].ToString();
@@ -79,6 +83,13 @@ namespace RomanCalculator.Class
                     default:
                         throw new Exception($"The letter {_tmp} is not a valid roman numeral");
                 }
+
+                if(SafteyCount >= 40000)
+                {
+                    throw new Exception($"Maximum amount of loops reached, aborting addition");
+                }
+
+                SafteyCount++;
             }
 
             return summand1;
