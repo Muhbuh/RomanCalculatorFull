@@ -15,6 +15,11 @@ namespace RomanCalculator.Class
 
         public bool CheckNumeral(string number)
         {
+            if(number == "")
+            {
+                return false;
+            }
+
             for (int i = 0; i < number.Length; i++)
             {
                 string _tmp = number[i].ToString();

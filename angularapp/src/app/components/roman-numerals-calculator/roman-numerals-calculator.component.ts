@@ -20,10 +20,10 @@ export class RomanNumeralsCalculatorComponent {
   @Input('f2Label') Field2Label = "2st Element:"
   @Input('f2Value') Field2Value = "";
 
-    ;
+  ;
   @Input('f3Label') Field3Label = "Result:";
   @Input('f3ReadOnly') Field3ReadOnly = true;
-  @Input('f3Value') Field3Value = "Test";
+  @Input('f3Value') Field3Value = "";
 
   /*  @Input('ddata') DDData: Array<IDropDownData> =[{ id: 1, text: "Roman" }, { id: 2, text: "Arabic" }];*/
   public DDData: Array<IDropDownData> = [];
@@ -37,12 +37,19 @@ export class RomanNumeralsCalculatorComponent {
     })
   }
 
+  // Need to check later why the return JSON has to be converted and reconverted agaig
   public onSum() {
-    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value} }).subscribe({
-      next: result => this.Field3Value = result,
+    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value } }).subscribe({
+      next: result => {
+        var str = JSON.stringify(result);
+        var data = JSON.parse(str);
+        this.Field3Value = data.text
+      },
       error: error => console.log(error),
     })
   }
+
+
 
   getField1Value(newItem: string) {
     this.Field1Value = newItem;

@@ -53,11 +53,11 @@ namespace RomanCalculatorTest
         [TestMethod]
         public void TestCheckNumeralConcatedFalse()
         {
-            List<string> TestCases = new List<string>() { "MDCLVXI", "MMMDXMXXIII", "CIVD", "CIM", "CMD", "XIL", "MMMCVXCIX", "XCX", "CMC", "CMCD" };
+            List<string> TestCases = new List<string>() { "MDCLVXI", "MMMDXMXXIII", "CIVD", "CIM", "CMD", "XIL", "MMMCVXCIX", "XCX", "CMC", "CMCD", "IIII", "VV", "XXXX", "LL", "CCCC", "DD", "" };
 
             for (int i = 0; i < TestCases.Count; i++)
             {
-                //Console.WriteLine(TestCases[i]);
+                Console.WriteLine(TestCases[i]);
                 Assert.IsFalse(Checker.CheckNumeral(TestCases[i]));
             }
         }

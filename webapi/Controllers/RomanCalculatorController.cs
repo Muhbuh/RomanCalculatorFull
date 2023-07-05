@@ -29,7 +29,7 @@ public class RomanCalculatorController : ControllerBase
     public IEnumerable<DropDownData> GetDropDownData()
     {
 
-        if(DDdata != null)
+        if (DDdata != null)
         {
             return DDdata;
         }
@@ -46,7 +46,7 @@ public class RomanCalculatorController : ControllerBase
     [HttpGet(Name = "GetSum")]
     public JsonResult GetSum(string summand1 = "", string summand2 = "")
     {
-        bool succes = false;
+        bool success = false;
         string text = "";
 
         Checker = new NumberCheck();
@@ -55,9 +55,33 @@ public class RomanCalculatorController : ControllerBase
         List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
 
-        Checker.Init(ValidSymbols,MaximumNumberOfRepeats);
+        Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
 
-        JsonResult res = new JsonResult("controller");
+        if (!Checker.CheckNumeral(summand1))
+        {
+            text = "The first value is not a valid number!";
+        }
+
+        if (!Checker.CheckNumeral(summand2))
+        {
+            text = "The second value is not a valid number!";
+        }
+
+        if (text == "")
+        {
+            text = Calculator.Addition(summand1, summand2);
+            success = true;
+
+            if (text.Contains("MMMM"))
+            {
+                text = "Sum exceeds limit of MMMCMXCIX";
+                success = false;
+            } 
+        }
+
+
+       var data = new { success = success, text = text};
+        JsonResult res = new JsonResult(data);
         return res;
     }
 }
