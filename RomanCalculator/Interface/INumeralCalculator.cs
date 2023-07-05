@@ -9,7 +9,7 @@ namespace RomanCalculator.Interface
     /// <summary>
     /// Interface for calculation of symbolic numbers
     /// </summary>
-    internal interface NumeralCalculator
+    public interface INumeralCalculator
     {
         /// <summary>
         /// Method to add two symbolic numbers together

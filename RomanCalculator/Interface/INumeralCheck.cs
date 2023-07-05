@@ -11,7 +11,7 @@ namespace RomanCalculator.Interface
     /// This interface assume that the value of each symbol decreases or increases from left to right
     /// e.g. MCX -> 1000 100 10 or XCM -> 10 100 1000
     /// </summary>
-    internal interface NumeralCheck
+    public interface INumeralCheck
     {
         // In the long term it would be better to create a configuration class and use a JSON config file
 

@@ -14,12 +14,12 @@ namespace RomanCalculator.Class
     /// For now the configuration is directly implementet. In later version the
     /// implementation can be replaced with a configuration method
     /// </summary>
-    public class NumberCalculator : NumeralCalculator
+    public class RomanNumberCalculator : INumeralCalculator
     {
         /// <summary>
         /// List of valid symbols
         /// </summary>
-        List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+        internal List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
 
         /// <summary>
         /// A list containing all combined values

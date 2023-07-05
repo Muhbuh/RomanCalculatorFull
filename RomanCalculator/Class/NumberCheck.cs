@@ -7,7 +7,7 @@ namespace RomanCalculator.Class
     /// This class is used to check if the string is a valid roman numeral
     /// Some basic configuration also for changes in values and order
     /// </summary>
-    public class NumberCheck : NumeralCheck
+    public class NumberCheck : INumeralCheck
     {
         public List<string> ValidSymbols { get; set; }
 

@@ -3,9 +3,9 @@ using RomanCalculator.Class;
 namespace RomanCalculatorTest
 {
     [TestClass]
-    public class NumeralCalculatorTest
+    public class RomanNumeralCalculatorTest
     {
-        private NumberCalculator Calculator = new NumberCalculator();
+        private RomanNumberCalculator Calculator = new RomanNumberCalculator();
 
         [TestInitialize]
         public void Init()

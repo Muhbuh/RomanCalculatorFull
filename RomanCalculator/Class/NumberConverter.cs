@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RomanCalculator.Class
 {
-    public class NumberConverter : NumeralConverter
+    public class NumberConverter : INumeralConverter
     {
         public List<string> ValidSymbols { get; set; }
         public List<int> SymbolValues { get; set; }

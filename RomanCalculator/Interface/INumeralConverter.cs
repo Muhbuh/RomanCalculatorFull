@@ -9,7 +9,7 @@ namespace RomanCalculator.Interface
     /// <summary>
     /// Interface used to convert symbolic number into an integer and vice versa
     /// </summary>
-    internal interface NumeralConverter
+    public interface INumeralConverter
     {
         // In the long term it would be better to create a configuration class and use a JSON config file
 
