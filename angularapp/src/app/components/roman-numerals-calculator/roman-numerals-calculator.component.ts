@@ -23,14 +23,18 @@ export class RomanNumeralsCalculatorComponent {
 
   @Input('f1Label') Field1Label = "1st Element:";
   @Input('f1Value') Field1Value = "";
+  @Input('f1invalid') Field1InvalidValue = false;
 
   @Input('f2Label') Field2Label = "2st Element:"
   @Input('f2Value') Field2Value = "";
+  @Input('f2invalid') Field2InvalidValue = false;
 
   ;
   @Input('f3Label') Field3Label = "Result:";
   @Input('f3ReadOnly') Field3ReadOnly = true;
   @Input('f3Value') Field3Value = "";
+  @Input('f3invalid') Field3InvalidValue = false;
+  @Input('f3errormessage') Field3ErrorMesage = "";
 
   /*  @Input('ddata') DDData: Array<IDropDownData> =[{ id: 1, text: "Roman" }, { id: 2, text: "Arabic" }];*/
   public DDData: Array<IDropDownData> = [];

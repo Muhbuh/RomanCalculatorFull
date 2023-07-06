@@ -7,6 +7,9 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrls: ['./roman-numerals-input-field.component.css'],
 })
 export class RomanNumeralsInputFieldComponent {
+  @Input('invalid') InvalidValue = false;
+  @Input('error') ErrorMessage = "Input is not a valid number";
+
   @Input('label') LabelText = 'PlaceHolder Label';
 
     private _value: string = "";

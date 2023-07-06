@@ -49,6 +49,16 @@ public class RomanCalculatorController : ControllerBase
         return DDdata;
     }
 
+    [HttpGet(Name = "ConvertNumbers")]
+    public JsonResult ConvertNumbers(string summand1 = "", string summand2 = "", string result = "", int numberType = 0)
+    {
+
+
+        var data = new { success = false, text = "" };
+        JsonResult res = new JsonResult(data);
+        return res;
+    }
+
     [HttpGet(Name = "GetSum")]
     public JsonResult GetSum(string summand1 = "", string summand2 = "", int numberType = 0)
     {
@@ -61,8 +71,6 @@ public class RomanCalculatorController : ControllerBase
         }
 
         Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
-
-        
 
         if (!CheckNumber(summand1, numberType))
         {

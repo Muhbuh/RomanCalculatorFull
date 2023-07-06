@@ -1,4 +1,5 @@
 <div class="roman-Input-div">
   <label>{{LabelText}}</label>
   <input type="text" value="{{Value}}" [readonly]="ReadOnly" #newValue (keyup)="addNewValue(newValue.value)">
+  <span *ngIf="InvalidValue" style="color:red"> {{ErrorMessage}} </span>
 </div>
