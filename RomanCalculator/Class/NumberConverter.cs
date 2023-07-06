@@ -9,11 +9,28 @@ namespace RomanCalculator.Class
 {
     public class NumberConverter : INumeralConverter
     {
-        public List<string> ValidSymbols { get; set; }
-        public List<int> SymbolValues { get; set; }
+        // In the long term it would be better to create a configuration class and use a JSON config file
+
+        /// <summary>
+        /// List of valid symbols in the numeral string
+        /// The value i can be followed by any value with an higher index but not the other way around
+        /// </summary>
+        private List<string> ValidSymbols { get; set; }
+
+        /// <summary>
+        /// List with the values for the valid symbols. List must have same length
+        /// </summary>
+        private List<int> SymbolValues { get; set; }
+
+        private INumeralCheck Checker { get; set; }
 
         public string ConvertIntToString(int Number)
         {
+            if (Number < 1)
+            {
+                throw new ArgumentException($"Input number needs to be an integer of 1 order larger, current value: {Number}");
+            }
+
             StringBuilder sb = new StringBuilder();
 
             while (Number > 0)
@@ -22,7 +39,7 @@ namespace RomanCalculator.Class
                 {
                     if(i == SymbolValues.Count)
                     {
-                        throw new Exception($"Cannot Symbolvalues equal/smaller than the current Number: {Number}");
+                        throw new Exception($"Cannot find Symbolvalues equal/smaller than the current Number: {Number}");
                     }
 
                     if (Number >= SymbolValues[i])
@@ -39,6 +56,11 @@ namespace RomanCalculator.Class
 
         public int ConvertStringToInt(string Number)
         {
+            if(!Checker.CheckNumeral(Number))
+            {
+                throw new ArgumentException($"Input number needs to be a valid roman number, current: {Number}");
+            }
+
             int result = 0;
 
             for (int i = 0; i < Number.Length; i++)
@@ -79,7 +101,7 @@ namespace RomanCalculator.Class
             }
         }
 
-        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues)
+        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker)
         {
             if (_ValidSymbols == null || _ValidSymbols.Count == 0)
             {
@@ -91,8 +113,14 @@ namespace RomanCalculator.Class
                 throw new ArgumentException("The list of symbol values is either no defined or does not have the same length as the valid symbol list", nameof(_SymbolValues));
             }
 
+            if(_Checker == null || _Checker.ValidSymbols == null || _Checker.MaximumNumberOfRepeats == null)
+            {
+                throw new AggregateException("The number checker is not valid");
+            }
+
             ValidSymbols = _ValidSymbols;
             SymbolValues = _SymbolValues;
+            Checker = _Checker;
         }
     }
 }

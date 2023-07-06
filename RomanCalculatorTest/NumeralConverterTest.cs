@@ -1,4 +1,5 @@
 using RomanCalculator.Class;
+using RomanCalculator.Interface;
 
 namespace RomanCalculatorTest
 {
@@ -12,8 +13,12 @@ namespace RomanCalculatorTest
         {
             List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
             List<int> SymbolValues = new List<int>() { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+            List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
 
-            Converter.Init(ValidSymbols, SymbolValues);
+            INumeralCheck checker = new NumberCheck();
+            checker.Init(ValidSymbols, MaximumNumberOfRepeats);
+
+            Converter.Init(ValidSymbols, SymbolValues, checker);
         }
 
         [TestMethod]
@@ -70,7 +75,7 @@ namespace RomanCalculatorTest
         {
             List<string> TestCases = new List<string> { "MDCLXVI", "3533", "CIV", "109", "CML", "14", "MMMCMXCIX", "95", "CMX", "904" };
             List<string> Expected = new List<string> { "1666", "MMMDXXXIII", "104", "CIX", "950", "XIV", "3999", "XCV", "910", "CMIV" };
-            List<bool> ConversionType = new List<bool>() { true,false,true,false, true, false, true, false, true, false };
+            List<bool> ConversionType = new List<bool>() { true, false, true, false, true, false, true, false, true, false };
 
             for (int i = 0; i < TestCases.Count; i++)
             {

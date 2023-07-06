@@ -11,19 +11,6 @@ namespace RomanCalculator.Interface
     /// </summary>
     public interface INumeralConverter
     {
-        // In the long term it would be better to create a configuration class and use a JSON config file
-
-        /// <summary>
-        /// List of valid symbols in the numeral string
-        /// The value i can be followed by any value with an higher index but not the other way around
-        /// </summary>
-        public List<string> ValidSymbols { get; set; }
-
-        /// <summary>
-        /// List with the values for the valid symbols. List must have same length
-        /// </summary>
-        public List<int> SymbolValues { get; set; }
-
         /// <summary>
         /// Convert a number as symbols to interger
         /// </summary>
@@ -51,6 +38,6 @@ namespace RomanCalculator.Interface
         /// </summary>
         /// <param name="_ValidSymbols"></param>
         /// <param name="_SymbolValues"></param>
-        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues);
+        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker);
     }
 }
