@@ -124,6 +124,7 @@ export class RomanNumeralsCalculatorComponent {
   }
 
   getDDDataValue(newItem: string) {
+    var oldValue = this.NumberType;
     var option = Number(newItem);
 
     if (isNaN(option)) {
@@ -136,7 +137,23 @@ export class RomanNumeralsCalculatorComponent {
     this.FloorValue = this.FloorValues[option];
     this.CeilingValue = this.CeilingValues[option];
 
-    this.CheckField1();
-    this.CheckField2();
+    this.ConvertNumbers(oldValue);
+  }
+
+  ConvertNumbers(oldValue: number) {
+    this.HTTP.get<string>('/romancalculator/ConvertNumbers', { params: { summand1: this.Field1Value, summand2: this.Field2Value, result: this.Field3Value, oldType: oldValue, newType: this.NumberType } }).subscribe({
+      next: result => {
+        var str = JSON.stringify(result);
+        var data = JSON.parse(str);
+        if (data.success) {
+          this.Field1Value = data.field1;
+          this.Field2Value = data.field2;
+          this.Field3Value = data.field3;
+        }
+        else {
+        }
+      },
+      error: error => console.log(error),
+    })
   }
 }

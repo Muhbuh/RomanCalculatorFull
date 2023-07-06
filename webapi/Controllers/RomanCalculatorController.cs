@@ -72,13 +72,51 @@ public class RomanCalculatorController : ControllerBase
     }
 
     [HttpGet(Name = "ConvertNumbers")]
-    public JsonResult ConvertNumbers(string summand1 = "", string summand2 = "", string result = "", int numberType = 0)
+    public JsonResult ConvertNumbers(string summand1 = "", string summand2 = "", string result = "", int oldType = 0, int newType = 0)
     {
+        bool success = true;
 
+        string field1, field2, field3;
 
-        var data = new { success = false, text = "" };
+        if (Converter == null)
+        {
+            InitLogic();
+        }
+
+        field1 = ConvertFromTypeToType(summand1, oldType, newType);
+        field2 = ConvertFromTypeToType(summand2, oldType, newType);
+        field3 = ConvertFromTypeToType(result, oldType, newType);
+
+        var data = new { success = success, field1 = field1, field2 = field2, field3 = field3 };
         JsonResult res = new JsonResult(data);
         return res;
+    }
+
+    /// <summary>
+    /// Improve this method later to allow conversion from any type to any
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="oldType"></param>
+    /// <param name="newType"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private string ConvertFromTypeToType(string number, int oldType, int newType)
+    {
+        switch (oldType)
+        {
+            case 0:
+                return Converter.Convert(number, true);
+            case 1:
+                string _tmp =  Converter.Convert(number, false);
+
+                if(_tmp == "0") // No need for a null value
+                {
+                    _tmp = "";
+                }
+                return _tmp;
+            default:
+                throw new ArgumentException($"Type {oldType} is not valid");
+        }
     }
 
     [HttpGet(Name = "GetSum")]
@@ -125,7 +163,7 @@ public class RomanCalculatorController : ControllerBase
         else
         {
             success = true;
-            text = ConvertInputToNumerType(text, numberType);
+            text = ConvertInputToNumberType(text, numberType);
         }
 
 
@@ -178,12 +216,12 @@ public class RomanCalculatorController : ControllerBase
     }
 
     /// <summary>
-    /// Convert the input into a roman number for the calculator
+    /// Convert the input into a int number for the calculator
     /// </summary>
     /// <param name="summand2"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private string ConvertInputToNumerType(string number, int numberType)
+    private string ConvertInputToNumberType(string number, int numberType)
     {
         // No need to change roman to roman
         if (numberType == 0)
