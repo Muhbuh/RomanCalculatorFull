@@ -9,8 +9,13 @@ import { BaseRouteReuseStrategy } from '@angular/router';
   styleUrls: ['./roman-numerals-calculator.component.css'],
 })
 export class RomanNumeralsCalculatorComponent {
-  @Input('floor') FloorValue = 'I';
-  @Input('ceiling') CeilingValue = 'MMMCMXCIX';
+
+  // Replace later with api call to get config
+  FloorValues = ["I", "1"];
+  CeilingValues = ["MMMCMXCIX", 3999];
+
+  @Input('floor') FloorValue = this.FloorValues[0];
+  @Input('ceiling') CeilingValue = this.CeilingValues[0];
 
 
 
@@ -57,5 +62,24 @@ export class RomanNumeralsCalculatorComponent {
 
   getField2Value(newItem: string) {
     this.Field2Value = newItem;
+  }
+
+  getDDDataValue(newItem: string) {
+    console.log(newItem);
+    var option = Number(newItem);
+    console.log(option);
+
+    if (isNaN(option)) {
+      console.log("Drop down list returned non numeric value"); // Replace with proper error message
+      return;
+    }
+
+    this.FloorValue = this.FloorValues[option];
+    this.CeilingValue = this.CeilingValues[option];
+
+    this.HTTP.get<string>('/romancalculator/ChangeNumberType', { params: { type : option } }).subscribe({
+      next: result => {},
+      error: error => console.log(error),
+    })
   }
 }

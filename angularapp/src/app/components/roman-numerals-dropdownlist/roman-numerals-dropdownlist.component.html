@@ -1,5 +1,5 @@
 <label>{{LabelText}}</label>
 <br/>
-<select>
-  <option *ngFor ="let dddata of Data" value="{{dddata.id}}">{{dddata.text}}</option>
+<select #ddList (change)='onOptionsSelected(ddList.value)'>>
+  <option  *ngFor ="let dddata of Data" value="{{dddata.id}}">{{dddata.text}}</option>
 </select>

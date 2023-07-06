@@ -39,6 +39,14 @@ namespace RomanCalculator.Interface
         public string ConvertIntToString(int Number);
 
         /// <summary>
+        /// Method to choose which conversion to use
+        /// </summary>
+        /// <param name="Number"></param>
+        /// <param name="toInt"></param>
+        /// <returns></returns>
+        public string Convert(string Number, bool toInt);
+
+        /// <summary>
         /// Initialize class
         /// </summary>
         /// <param name="_ValidSymbols"></param>

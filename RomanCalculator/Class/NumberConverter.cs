@@ -58,6 +58,27 @@ namespace RomanCalculator.Class
             return result;
         }
 
+        public string Convert(string Number, bool ConverToInt)
+        {
+            if(ConverToInt)
+            {
+                return ConvertStringToInt(Number).ToString();
+            }
+            else
+            {
+                int _number;
+
+                if(Int32.TryParse(Number,out _number))
+                {
+                    return ConvertIntToString(_number);
+                }
+                else
+                {
+                    throw new ArgumentException($"{Number} is not a valid integer to convert to string");
+                }
+            }
+        }
+
         public void Init(List<string> _ValidSymbols, List<int> _SymbolValues)
         {
             if (_ValidSymbols == null || _ValidSymbols.Count == 0)

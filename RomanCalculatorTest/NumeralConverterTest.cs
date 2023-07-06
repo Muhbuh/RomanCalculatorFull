@@ -64,5 +64,19 @@ namespace RomanCalculatorTest
                 Assert.AreEqual(Converter.ConvertIntToString(TestCases[i]), Expected[i]);
             }
         }
+
+        [TestMethod]
+        public void TestCheckNumeralConverter()
+        {
+            List<string> TestCases = new List<string> { "MDCLXVI", "3533", "CIV", "109", "CML", "14", "MMMCMXCIX", "95", "CMX", "904" };
+            List<string> Expected = new List<string> { "1666", "MMMDXXXIII", "104", "CIX", "950", "XIV", "3999", "XCV", "910", "CMIV" };
+            List<bool> ConversionType = new List<bool>() { true,false,true,false, true, false, true, false, true, false };
+
+            for (int i = 0; i < TestCases.Count; i++)
+            {
+                Console.WriteLine(TestCases[i]);
+                Assert.AreEqual(Converter.Convert(TestCases[i], ConversionType[i]), Expected[i]);
+            }
+        }
     }
 }
