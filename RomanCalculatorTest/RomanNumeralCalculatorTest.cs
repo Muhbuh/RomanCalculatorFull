@@ -128,9 +128,9 @@ namespace RomanCalculatorTest
         [TestMethod]
         public void TestAddition()
         {
-            List<string> Summand1 = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "CMXCV", "XCV", "MMMCMXCIX" };
-            List<string> Summand2 = new List<string>() { "ML", "CMX", "DV", "CDXIV", "CCC", "CXL", "XX", "XXIV", "LX", "LIX", "IV", "LIV", "XI", "XIV", "LVIII", "MXLV", "CXLV", "MMMCMXCIX" };
-            List<string> Expected = new List<string>() { "MML", "MDCCCX", "MV", "DCCCXIV", "CD", "CCXXX", "LXX", "LXIV", "LXX", "LXVIII", "IX", "LVIII", "XII", "XVI", "LXI", "MMXL", "CCXL", "MMMMMMMCMXCVIII" };
+            List<string> Summand1 = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I", "II", "III", "CMXCV", "XCV", "MMMCMXCIX", "III" };
+            List<string> Summand2 = new List<string>() { "ML", "CMX", "DV", "CDXIV", "CCC", "CXL", "XX", "XXIV", "LX", "LIX", "IV", "LIV", "XI", "XIV", "LVIII", "MXLV", "CXLV", "MMMCMXCIX", "III" };
+            List<string> Expected = new List<string>() { "MML", "MDCCCX", "MV", "DCCCXIV", "CD", "CCXXX", "LXX", "LXIV", "LXX", "LXVIII", "IX", "LVIII", "XII", "XVI", "LXI", "MMXL", "CCXL", "MMMMMMMCMXCVIII", "VI"};
 
             Console.WriteLine("Summand1 : Summand2 : Result : Expected");
             for (int i = 0; i < Expected.Count; i++)

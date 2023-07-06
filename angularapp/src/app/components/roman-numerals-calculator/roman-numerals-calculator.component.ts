@@ -57,13 +57,14 @@ export class RomanNumeralsCalculatorComponent {
         next: result => {
           var str = JSON.stringify(result);
           var data = JSON.parse(str);
-          if (data.succes) {
+          if (data.success) {
             this.Field3Value = data.text
             this.Field3ErrorMesage = "";
             this.Field3InvalidValue = false;
           }
           else {
-            console.log("Not implemented");
+            this.Field3ErrorMesage = data.text;
+            this.Field3InvalidValue = true;
           }
         },
         error: error => console.log(error),
@@ -78,13 +79,17 @@ export class RomanNumeralsCalculatorComponent {
 
 
   getField1Value(newItem: string) {
-    this.Field1Value = newItem;
+    this.Field1Value = newItem.toUpperCase();
 
+    this.CheckField1();
+  }
+
+  CheckField1() {
     this.HTTP.get<string>('/romancalculator/CheckNum', { params: { number: this.Field1Value, numberType: this.NumberType } }).subscribe({
       next: result => {
         var str = JSON.stringify(result);
         var data = JSON.parse(str);
-        if (data.succes) {
+        if (data.success) {
           this.Field1InvalidValue = false;
         }
         else {
@@ -97,13 +102,16 @@ export class RomanNumeralsCalculatorComponent {
   }
 
   getField2Value(newItem: string) {
-    this.Field2Value = newItem;
+    this.Field2Value = newItem.toUpperCase();
+    this.CheckField2();
+  }
 
+  CheckField2() {
     this.HTTP.get<string>('/romancalculator/CheckNum', { params: { number: this.Field2Value, numberType: this.NumberType } }).subscribe({
       next: result => {
         var str = JSON.stringify(result);
         var data = JSON.parse(str);
-        if (data.succes) {
+        if (data.success) {
           this.Field2InvalidValue = false;
         }
         else {
@@ -116,9 +124,7 @@ export class RomanNumeralsCalculatorComponent {
   }
 
   getDDDataValue(newItem: string) {
-    console.log(newItem);
     var option = Number(newItem);
-    console.log(option);
 
     if (isNaN(option)) {
       console.log("Drop down list returned non numeric value"); // Replace with proper error message
@@ -129,5 +135,8 @@ export class RomanNumeralsCalculatorComponent {
 
     this.FloorValue = this.FloorValues[option];
     this.CeilingValue = this.CeilingValues[option];
+
+    this.CheckField1();
+    this.CheckField2();
   }
 }

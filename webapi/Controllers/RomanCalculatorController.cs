@@ -52,7 +52,7 @@ public class RomanCalculatorController : ControllerBase
     [HttpGet(Name = "CheckNum")]
     public JsonResult CheckNum(string number = "", int numberType = 0)
     {
-        if(Checker == null)
+        if (Checker == null)
         {
             InitLogic();
         }
@@ -61,12 +61,12 @@ public class RomanCalculatorController : ControllerBase
 
         string text = "";
 
-        if(!success && number != "")
+        if (!success && number != "")
         {
             text = "Input is not a valid number";
         }
 
-        var data = new { success = false, text = text};
+        var data = new { success = success, text = text };
         JsonResult res = new JsonResult(data);
         return res;
     }
@@ -87,41 +87,47 @@ public class RomanCalculatorController : ControllerBase
         bool success = false;
         string text = "";
 
-        if(Calculator == null)
+        if (Calculator == null)
         {
             InitLogic();
         }
 
         Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
 
+        // Safety check, should not be needed
         if (!CheckNumber(summand1, numberType))
         {
             text = "The first value is not a valid number!";
+            var data1 = new { success = success, text = text };
+            JsonResult res1 = new JsonResult(data1);
+            return res1;
         }
 
+        // Safety check, should not be needed
         if (!CheckNumber(summand1, numberType))
         {
             text = "The second value is not a valid number!";
+            var data2 = new { success = success, text = text };
+            JsonResult res2 = new JsonResult(data2);
+            return res2;
         }
 
-        if (text == "")
+        summand1 = ConvertToRomanNumber(summand1, numberType);
+        summand2 = ConvertToRomanNumber(summand2, numberType);
+
+        text = Calculator.Addition(summand1, summand2);
+
+        if (text.Contains("MMMM"))
         {
-            summand1 = ConvertToRomanNumber(summand1, numberType);
-            summand2 = ConvertToRomanNumber(summand2, numberType);
-
-            text = Calculator.Addition(summand1, summand2);
-
-            if (text.Contains("MMMM"))
-            {
-                text = "Sum exceeds limit of MMMCMXCIX";
-                success = false;
-            }
-            else
-            {
-                success = true;
-                text = ConvertInputToNumerType(text, numberType);
-            }
+            text = "Sum exceeds limit of MMMCMXCIX";
+            success = false;
         }
+        else
+        {
+            success = true;
+            text = ConvertInputToNumerType(text, numberType);
+        }
+
 
 
         var data = new { success = success, text = text };
@@ -138,7 +144,7 @@ public class RomanCalculatorController : ControllerBase
     /// <exception cref="ArgumentException"></exception>
     private bool CheckNumber(string number, int numberType)
     {
-        switch(numberType)
+        switch (numberType)
         {
             case 0:
                 return Checker.CheckNumeral(number);
@@ -151,7 +157,7 @@ public class RomanCalculatorController : ControllerBase
 
     private string ConvertToRomanNumber(string number, int numberType)
     {
-        if(Converter == null)
+        if (Converter == null)
         {
             InitLogic();
         }
