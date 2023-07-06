@@ -14,6 +14,8 @@ export class RomanNumeralsCalculatorComponent {
   FloorValues = ["I", "1"];
   CeilingValues = ["MMMCMXCIX", 3999];
 
+  NumberType = 0;
+
   @Input('floor') FloorValue = this.FloorValues[0];
   @Input('ceiling') CeilingValue = this.CeilingValues[0];
 
@@ -44,7 +46,7 @@ export class RomanNumeralsCalculatorComponent {
 
   // Need to check later why the return JSON has to be converted and reconverted agaig
   public onSum() {
-    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value } }).subscribe({
+    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value, numberType: this.NumberType} }).subscribe({
       next: result => {
         var str = JSON.stringify(result);
         var data = JSON.parse(str);
@@ -74,12 +76,9 @@ export class RomanNumeralsCalculatorComponent {
       return;
     }
 
+    this.NumberType = option;
+
     this.FloorValue = this.FloorValues[option];
     this.CeilingValue = this.CeilingValues[option];
-
-    this.HTTP.get<string>('/romancalculator/ChangeNumberType', { params: { type : option } }).subscribe({
-      next: result => {},
-      error: error => console.log(error),
-    })
   }
 }

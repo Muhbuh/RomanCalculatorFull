@@ -4,6 +4,7 @@ using webapi.Interface;
 using RomanCalculator.Interface;
 using RomanCalculator.Class;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace webapi.Controllers;
 
@@ -12,11 +13,6 @@ namespace webapi.Controllers;
 public class RomanCalculatorController : ControllerBase
 {
     private readonly ILogger<RomanCalculatorController> _logger;
-
-    /// <summary>
-    /// The current active number type. 0 is the default and in this case Roman
-    /// </summary>
-    private int NumberType = 0;
 
     private INumeralCheck Checker { get; set; } = null;
     private INumeralConverter Converter { get; set; } = null;
@@ -54,7 +50,7 @@ public class RomanCalculatorController : ControllerBase
     }
 
     [HttpGet(Name = "GetSum")]
-    public JsonResult GetSum(string summand1 = "", string summand2 = "")
+    public JsonResult GetSum(string summand1 = "", string summand2 = "", int numberType = 0)
     {
         bool success = false;
         string text = "";
@@ -78,8 +74,8 @@ public class RomanCalculatorController : ControllerBase
 
         if (text == "")
         {
-            summand1 = ConvertToRomanNumber(summand1);
-            summand2 = ConvertToRomanNumber(summand2);
+            summand1 = ConvertToRomanNumber(summand1, numberType);
+            summand2 = ConvertToRomanNumber(summand2, numberType);
 
             text = Calculator.Addition(summand1, summand2);
 
@@ -91,7 +87,7 @@ public class RomanCalculatorController : ControllerBase
             else
             {
                 success = true;
-                text = ConvertInputToNumerType(text);
+                text = ConvertInputToNumerType(text, numberType);
             }
         }
 
@@ -101,19 +97,19 @@ public class RomanCalculatorController : ControllerBase
         return res;
     }
 
-    private string ConvertToRomanNumber(string number)
+    private string ConvertToRomanNumber(string number, int numberType)
     {
         if(Converter == null)
         {
             InitLogic();
         }
         // No need to change roman to roman
-        if (NumberType == 0)
+        if (numberType == 0)
         {
             return number;
         }
 
-        switch (NumberType)
+        switch (numberType)
         {
             case (1):
                 number = Converter.Convert(number, false);
@@ -129,15 +125,15 @@ public class RomanCalculatorController : ControllerBase
     /// <param name="summand2"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private string ConvertInputToNumerType(string number)
+    private string ConvertInputToNumerType(string number, int numberType)
     {
         // No need to change roman to roman
-        if (NumberType == 0)
+        if (numberType == 0)
         {
             return number;
         }
 
-        switch (NumberType)
+        switch (numberType)
         {
             case (1):
                 number = Converter.Convert(number, true);
@@ -159,17 +155,8 @@ public class RomanCalculatorController : ControllerBase
         ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
         SymbolValues = new List<int>() { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-    }
 
-    /// <summary>
-    /// Method to change the number type
-    /// No callback needed, potential errors are already filtered out
-    /// Option: add check if the input is in range of the drop down data
-    /// </summary>
-    /// <param name="type"></param>
-    [HttpGet(Name = "ChangeNumberType")]
-    public void ChangeNumberType(int type)
-    {
-        NumberType = type;
+        Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
+        Converter.Init(ValidSymbols, SymbolValues);
     }
 }
