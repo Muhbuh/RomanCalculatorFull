@@ -13,19 +13,6 @@ namespace RomanCalculator.Interface
     /// </summary>
     public interface INumeralCheck
     {
-        // In the long term it would be better to create a configuration class and use a JSON config file
-
-        /// <summary>
-        /// List of valid symbols in the numeral string
-        /// The value i can be followed by any value with an higher index but not the other way around
-        /// </summary>
-        public List<string> ValidSymbols { get; set; }
-
-        /// <summary>
-        /// List with the number of maximum repeats for the valid symbols. List must have same length
-        /// </summary>
-        public List<int> MaximumNumberOfRepeats { get; set; }
-
         /// <summary>
         /// Initiate the configuration of the numeral system
         /// </summary>

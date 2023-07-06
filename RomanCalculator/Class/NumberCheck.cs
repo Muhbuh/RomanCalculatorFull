@@ -9,9 +9,18 @@ namespace RomanCalculator.Class
     /// </summary>
     public class NumberCheck : INumeralCheck
     {
-        public List<string> ValidSymbols { get; set; }
+        // In the long term it would be better to create a configuration class and use a JSON config file
 
-        public List<int> MaximumNumberOfRepeats { get; set; }
+        /// <summary>
+        /// List of valid symbols in the numeral string
+        /// The value i can be followed by any value with an higher index but not the other way around
+        /// </summary>
+        private List<string> ValidSymbols { get; set; }
+
+        /// <summary>
+        /// List with the number of maximum repeats for the valid symbols. List must have same length
+        /// </summary>
+        private List<int> MaximumNumberOfRepeats { get; set; }
 
         public bool CheckNumeral(string number)
         {
