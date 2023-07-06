@@ -49,6 +49,28 @@ public class RomanCalculatorController : ControllerBase
         return DDdata;
     }
 
+    [HttpGet(Name = "CheckNum")]
+    public JsonResult CheckNum(string number = "", int numberType = 0)
+    {
+        if(Checker == null)
+        {
+            InitLogic();
+        }
+
+        bool success = CheckNumber(number, numberType);
+
+        string text = "";
+
+        if(!success && number != "")
+        {
+            text = "Input is not a valid number";
+        }
+
+        var data = new { success = false, text = text};
+        JsonResult res = new JsonResult(data);
+        return res;
+    }
+
     [HttpGet(Name = "ConvertNumbers")]
     public JsonResult ConvertNumbers(string summand1 = "", string summand2 = "", string result = "", int numberType = 0)
     {

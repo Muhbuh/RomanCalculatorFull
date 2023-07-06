@@ -23,11 +23,13 @@ export class RomanNumeralsCalculatorComponent {
 
   @Input('f1Label') Field1Label = "1st Element:";
   @Input('f1Value') Field1Value = "";
-  @Input('f1invalid') Field1InvalidValue = false;
+  @Input('f1invalid') Field1InvalidValue = true;
+  @Input('f1errormessage') Field1ErrorMesage = "";
 
   @Input('f2Label') Field2Label = "2st Element:"
   @Input('f2Value') Field2Value = "";
-  @Input('f2invalid') Field2InvalidValue = false;
+  @Input('f2invalid') Field2InvalidValue = true;
+  @Input('f2errormessage') Field2ErrorMesage = "";
 
   ;
   @Input('f3Label') Field3Label = "Result:";
@@ -50,24 +52,67 @@ export class RomanNumeralsCalculatorComponent {
 
   // Need to check later why the return JSON has to be converted and reconverted agaig
   public onSum() {
-    this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value, numberType: this.NumberType} }).subscribe({
-      next: result => {
-        var str = JSON.stringify(result);
-        var data = JSON.parse(str);
-        this.Field3Value = data.text
-      },
-      error: error => console.log(error),
-    })
+    if (!this.Field1InvalidValue && !this.Field2InvalidValue) {
+      this.HTTP.get<string>('/romancalculator/GetSum', { params: { summand1: this.Field1Value, summand2: this.Field2Value, numberType: this.NumberType } }).subscribe({
+        next: result => {
+          var str = JSON.stringify(result);
+          var data = JSON.parse(str);
+          if (data.succes) {
+            this.Field3Value = data.text
+            this.Field3ErrorMesage = "";
+            this.Field3InvalidValue = false;
+          }
+          else {
+            console.log("Not implemented");
+          }
+        },
+        error: error => console.log(error),
+      })
+    }
+    else {
+      this.Field3InvalidValue = true;
+      this.Field3ErrorMesage = "Inputs are not valid numbers";
+    }
   }
 
 
 
   getField1Value(newItem: string) {
     this.Field1Value = newItem;
+
+    this.HTTP.get<string>('/romancalculator/CheckNum', { params: { number: this.Field1Value, numberType: this.NumberType } }).subscribe({
+      next: result => {
+        var str = JSON.stringify(result);
+        var data = JSON.parse(str);
+        if (data.succes) {
+          this.Field1InvalidValue = false;
+        }
+        else {
+          this.Field1InvalidValue = true;
+          this.Field1ErrorMesage = data.text;
+        }
+      },
+      error: error => console.log(error),
+    })
   }
 
   getField2Value(newItem: string) {
     this.Field2Value = newItem;
+
+    this.HTTP.get<string>('/romancalculator/CheckNum', { params: { number: this.Field2Value, numberType: this.NumberType } }).subscribe({
+      next: result => {
+        var str = JSON.stringify(result);
+        var data = JSON.parse(str);
+        if (data.succes) {
+          this.Field2InvalidValue = false;
+        }
+        else {
+          this.Field2InvalidValue = true;
+          this.Field2ErrorMesage = data.text;
+        }
+      },
+      error: error => console.log(error),
+    })
   }
 
   getDDDataValue(newItem: string) {

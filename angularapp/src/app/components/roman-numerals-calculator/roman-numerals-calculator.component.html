@@ -5,8 +5,8 @@
 
 <app-roman-numerals-dropdownlist [Data] = "DDData" (newValueEvent)="getDDDataValue($event)"></app-roman-numerals-dropdownlist>
 
-<app-roman-numerals-input-field [label] ="Field1Label" [invalid]= "Field1InvalidValue" (newValueEvent)="getField1Value($event)"></app-roman-numerals-input-field>
-<app-roman-numerals-input-field [label] ="Field2Label" [invalid]= "Field2InvalidValue" (newValueEvent)="getField2Value($event)"></app-roman-numerals-input-field>
+<app-roman-numerals-input-field [label] ="Field1Label" [invalid]= "Field1InvalidValue" [error]= "Field1ErrorMesage" (newValueEvent)="getField1Value($event)"></app-roman-numerals-input-field>
+<app-roman-numerals-input-field [label] ="Field2Label" [invalid]= "Field2InvalidValue" [error]= "Field2ErrorMesage" (newValueEvent)="getField2Value($event)"></app-roman-numerals-input-field>
 <app-roman-numerals-input-field [Value] = "Field3Value" [label] ="Field3Label" [invalid]= "Field3InvalidValue" [error]= "Field3ErrorMesage" [readOnly] ="Field3ReadOnly"></app-roman-numerals-input-field>
 
 
