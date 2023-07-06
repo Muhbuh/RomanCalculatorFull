@@ -62,15 +62,17 @@ public class RomanCalculatorController : ControllerBase
 
         Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
 
-        //if (!Checker.CheckNumeral(summand1))
-        //{
-        //    text = "The first value is not a valid number!";
-        //}
+        
 
-        //if (!Checker.CheckNumeral(summand2))
-        //{
-        //    text = "The second value is not a valid number!";
-        //}
+        if (!CheckNumber(summand1, numberType))
+        {
+            text = "The first value is not a valid number!";
+        }
+
+        if (!CheckNumber(summand1, numberType))
+        {
+            text = "The second value is not a valid number!";
+        }
 
         if (text == "")
         {
@@ -95,6 +97,26 @@ public class RomanCalculatorController : ControllerBase
         var data = new { success = success, text = text };
         JsonResult res = new JsonResult(data);
         return res;
+    }
+
+    /// <summary>
+    /// Check if input is a valid number based on numbertype
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="numberType"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private bool CheckNumber(string number, int numberType)
+    {
+        switch(numberType)
+        {
+            case 0:
+                return Checker.CheckNumeral(number);
+            case 1:
+                return Int32.TryParse(number, out _);
+            default:
+                throw new ArgumentException($"The number type {numberType} is not valid");
+        }
     }
 
     private string ConvertToRomanNumber(string number, int numberType)
