@@ -64,6 +64,27 @@ public class RomanCalculatorController : ControllerBase
         if (!success && number != "")
         {
             text = "Input is not a valid number";
+            var data1 = new { success = success, text = text };
+            JsonResult res1 = new JsonResult(data1);
+            return res1;
+        }
+
+        //Check limits
+        if (numberType == 0 && number.Contains("MMMM"))
+        {
+            success = false;
+            text = "Value needs to be between I and MMMCMXCIX";
+        }
+        else if(numberType == 1 && Int32.TryParse(number, out _)) // Safety Parse
+        {
+            int _tmp = Int32.Parse(number); //Always works, since TryParse was successful before
+
+            if(_tmp < 1 || _tmp > 4000)
+            {
+                success = false;
+                text = "Value needs to be between 1 and 4000";
+            }
+
         }
 
         var data = new { success = success, text = text };
@@ -76,16 +97,57 @@ public class RomanCalculatorController : ControllerBase
     {
         bool success = true;
 
-        string field1, field2, field3;
+        string field1 = "", field2 = "", field3 = "";
 
         if (Converter == null)
         {
             InitLogic();
         }
 
-        field1 = ConvertFromTypeToType(summand1, oldType, newType);
-        field2 = ConvertFromTypeToType(summand2, oldType, newType);
-        field3 = ConvertFromTypeToType(result, oldType, newType);
+        if(oldType == 0)
+        {
+            if (Checker.CheckNumeral(summand1))
+            {
+                field1 = ConvertFromTypeToType(summand1, oldType, newType);
+            }
+
+            if (Checker.CheckNumeral(summand2))
+            {
+                field1 = ConvertFromTypeToType(summand2, oldType, newType);
+            }
+
+            if(Checker.CheckNumeral(result))
+            {
+                field1 = ConvertFromTypeToType(result, oldType, newType);
+            }
+        }
+        else if (oldType == 1)
+        {
+            int _tmp = 0;
+            if (Int32.TryParse(summand1, out _tmp))
+            {
+                if(_tmp > 0 && _tmp < 4000)
+                {
+                    field1 = ConvertFromTypeToType(summand1, oldType, newType);
+                }
+            }
+
+            if (Int32.TryParse(summand2, out _tmp))
+            {
+                if (_tmp > 0 && _tmp < 4000)
+                {
+                    field1 = ConvertFromTypeToType(summand2, oldType, newType);
+                }
+            }
+
+            if (Int32.TryParse(result, out _tmp))
+            {
+                if (_tmp > 0 && _tmp < 4000)
+                {
+                    field1 = ConvertFromTypeToType(result, oldType, newType);
+                }
+            }
+        }
 
         var data = new { success = success, field1 = field1, field2 = field2, field3 = field3 };
         JsonResult res = new JsonResult(data);
@@ -102,18 +164,17 @@ public class RomanCalculatorController : ControllerBase
     /// <exception cref="ArgumentException"></exception>
     private string ConvertFromTypeToType(string number, int oldType, int newType)
     {
+        if(number == "")
+        {
+            return "";
+        }
+
         switch (oldType)
         {
             case 0:
                 return Converter.Convert(number, true);
             case 1:
-                string _tmp =  Converter.Convert(number, false);
-
-                if(_tmp == "0") // No need for a null value
-                {
-                    _tmp = "";
-                }
-                return _tmp;
+                return Converter.Convert(number, false);
             default:
                 throw new ArgumentException($"Type {oldType} is not valid");
         }
