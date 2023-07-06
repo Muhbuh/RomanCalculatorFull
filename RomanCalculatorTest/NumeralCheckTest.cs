@@ -5,7 +5,7 @@ namespace RomanCalculatorTest
     [TestClass]
     public class NumeralCheckTest
     {
-        private NumberCheck Checker = new NumberCheck();
+        private NumberCheck Checker = null;
 
         [TestInitialize]
         public void Init()
@@ -13,7 +13,7 @@ namespace RomanCalculatorTest
             List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
             List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
 
-            Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
+            Checker = new NumberCheck(ValidSymbols, MaximumNumberOfRepeats);
         }
 
         [TestMethod]

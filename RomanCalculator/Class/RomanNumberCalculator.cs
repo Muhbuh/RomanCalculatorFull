@@ -19,12 +19,22 @@ namespace RomanCalculator.Class
         /// <summary>
         /// List of valid symbols
         /// </summary>
-        internal List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+        private List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
 
         /// <summary>
         /// A list containing all combined values
         /// </summary>
-        internal List<string> CombinedValues = new List<string>() { "IV", "IX", "XL", "XC", "CD", "CM" };
+        private List<string> CombinedValues = new List<string>() { "IV", "IX", "XL", "XC", "CD", "CM" };
+
+        /// <summary>
+        /// List of maximum repeats
+        /// </summary>
+        private List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
+
+        /// <summary>
+        /// Number checker
+        /// </summary>
+        private INumeralCheck Checker { get; set; }
 
         /// <summary>
         /// Summand2 will be added to summand1
@@ -301,6 +311,16 @@ namespace RomanCalculator.Class
             }
 
             return summand + symbol;
+        }
+
+        public RomanNumberCalculator(INumeralCheck _Checker)
+        {
+            if (_Checker == null)
+            {
+                throw new AggregateException("The number checker is not valid");
+            }
+
+            Checker = _Checker;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace RomanCalculatorTest
     [TestClass]
     public class NumeralConverterTest
     {
-        private NumberConverter Converter = new NumberConverter();
+        private NumberConverter Converter = null;
 
         [TestInitialize]
         public void Init()
@@ -15,10 +15,9 @@ namespace RomanCalculatorTest
             List<int> SymbolValues = new List<int>() { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
             List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
 
-            INumeralCheck checker = new NumberCheck();
-            checker.Init(ValidSymbols, MaximumNumberOfRepeats);
+            INumeralCheck checker = new NumberCheck(ValidSymbols, MaximumNumberOfRepeats);
 
-            Converter.Init(ValidSymbols, SymbolValues, checker);
+            Converter = new NumberConverter(ValidSymbols, SymbolValues, checker);
         }
 
         [TestMethod]

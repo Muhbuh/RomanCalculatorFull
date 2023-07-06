@@ -18,7 +18,7 @@ namespace RomanCalculator.Interface
         /// </summary>
         /// <param name="_ValidSymbols"></param>
         /// <param name="_MaximumNumberOfRepeats"></param>
-        public void Init(List<string> _ValidSymbols, List<int> _MaximumNumberOfRepeats);
+        //public void Init(List<string> _ValidSymbols, List<int> _MaximumNumberOfRepeats);
 
         /// <summary>
         /// 

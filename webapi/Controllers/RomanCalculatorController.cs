@@ -191,8 +191,6 @@ public class RomanCalculatorController : ControllerBase
             InitLogic();
         }
 
-        Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
-
         // Safety check, should not be needed
         if (!CheckNumber(summand1, numberType))
         {
@@ -306,14 +304,13 @@ public class RomanCalculatorController : ControllerBase
     /// </summary>
     private void InitLogic()
     {
-        Checker = new NumberCheck();
-        Calculator = new RomanNumberCalculator();
-        Converter = new NumberConverter();
+
         ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
         SymbolValues = new List<int>() { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
-        Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
-        Converter.Init(ValidSymbols, SymbolValues);
+        Checker = new NumberCheck(ValidSymbols, MaximumNumberOfRepeats);
+        Converter = new NumberConverter(ValidSymbols, SymbolValues, Checker);
+        Calculator = new RomanNumberCalculator(Checker);
     }
 }

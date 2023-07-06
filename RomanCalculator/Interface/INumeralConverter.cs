@@ -33,11 +33,11 @@ namespace RomanCalculator.Interface
         /// <returns></returns>
         public string Convert(string Number, bool toInt);
 
-        /// <summary>
-        /// Initialize class
-        /// </summary>
-        /// <param name="_ValidSymbols"></param>
-        /// <param name="_SymbolValues"></param>
-        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker);
+        ///// <summary>
+        ///// Initialize class
+        ///// </summary>
+        ///// <param name="_ValidSymbols"></param>
+        ///// <param name="_SymbolValues"></param>
+        //public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker);
     }
 }

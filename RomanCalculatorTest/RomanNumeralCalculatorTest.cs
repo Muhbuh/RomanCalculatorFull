@@ -1,11 +1,12 @@
 using RomanCalculator.Class;
+using RomanCalculator.Interface;
 
 namespace RomanCalculatorTest
 {
     [TestClass]
     public class RomanNumeralCalculatorTest
     {
-        private RomanNumberCalculator Calculator = new RomanNumberCalculator();
+        private RomanNumberCalculator Calculator = null;
 
         [TestInitialize]
         public void Init()
@@ -13,7 +14,9 @@ namespace RomanCalculatorTest
             List<string> ValidSymbols = new List<string>() { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
             List<int> MaximumNumberOfRepeats = new List<int>() { 3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3 };
 
-            //Checker.Init(ValidSymbols, MaximumNumberOfRepeats);
+            INumeralCheck checker = new NumberCheck(ValidSymbols, MaximumNumberOfRepeats);
+
+            Calculator = new RomanNumberCalculator(checker);
         }
 
         [TestMethod]

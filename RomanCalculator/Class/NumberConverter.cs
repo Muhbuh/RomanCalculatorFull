@@ -101,7 +101,7 @@ namespace RomanCalculator.Class
             }
         }
 
-        public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker)
+        public NumberConverter(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker)
         {
             if (_ValidSymbols == null || _ValidSymbols.Count == 0)
             {
@@ -113,7 +113,7 @@ namespace RomanCalculator.Class
                 throw new ArgumentException("The list of symbol values is either no defined or does not have the same length as the valid symbol list", nameof(_SymbolValues));
             }
 
-            if(_Checker == null || _Checker.ValidSymbols == null || _Checker.MaximumNumberOfRepeats == null)
+            if (_Checker == null)
             {
                 throw new AggregateException("The number checker is not valid");
             }
@@ -122,5 +122,27 @@ namespace RomanCalculator.Class
             SymbolValues = _SymbolValues;
             Checker = _Checker;
         }
+
+        //public void Init(List<string> _ValidSymbols, List<int> _SymbolValues, INumeralCheck _Checker)
+        //{
+        //    if (_ValidSymbols == null || _ValidSymbols.Count == 0)
+        //    {
+        //        throw new ArgumentException("The list of valid symbols is either no defined or empty", nameof(_ValidSymbols));
+        //    }
+
+        //    if (_SymbolValues == null || _ValidSymbols.Count != _SymbolValues.Count)
+        //    {
+        //        throw new ArgumentException("The list of symbol values is either no defined or does not have the same length as the valid symbol list", nameof(_SymbolValues));
+        //    }
+
+        //    if(_Checker == null)
+        //    {
+        //        throw new AggregateException("The number checker is not valid");
+        //    }
+
+        //    ValidSymbols = _ValidSymbols;
+        //    SymbolValues = _SymbolValues;
+        //    Checker = _Checker;
+        //}
     }
 }
