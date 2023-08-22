@@ -31,7 +31,6 @@ export class RomanNumeralsCalculatorComponent {
   @Input('f2invalid') Field2InvalidValue = true;
   @Input('f2errormessage') Field2ErrorMesage = "";
 
-  ;
   @Input('f3Label') Field3Label = "Result:";
   @Input('f3ReadOnly') Field3ReadOnly = true;
   @Input('f3Value') Field3Value = "";
