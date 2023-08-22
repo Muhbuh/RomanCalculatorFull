@@ -113,12 +113,12 @@ public class RomanCalculatorController : ControllerBase
 
             if (Checker.CheckNumeral(summand2))
             {
-                field1 = ConvertFromTypeToType(summand2, oldType, newType);
+                field2 = ConvertFromTypeToType(summand2, oldType, newType);
             }
 
             if(Checker.CheckNumeral(result))
             {
-                field1 = ConvertFromTypeToType(result, oldType, newType);
+                field3 = ConvertFromTypeToType(result, oldType, newType);
             }
         }
         else if (oldType == 1)
@@ -136,7 +136,7 @@ public class RomanCalculatorController : ControllerBase
             {
                 if (_tmp > 0 && _tmp < 4000)
                 {
-                    field1 = ConvertFromTypeToType(summand2, oldType, newType);
+                    field2 = ConvertFromTypeToType(summand2, oldType, newType);
                 }
             }
 
@@ -144,7 +144,7 @@ public class RomanCalculatorController : ControllerBase
             {
                 if (_tmp > 0 && _tmp < 4000)
                 {
-                    field1 = ConvertFromTypeToType(result, oldType, newType);
+                    field3 = ConvertFromTypeToType(result, oldType, newType);
                 }
             }
         }
