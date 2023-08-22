@@ -41,7 +41,7 @@ namespace RomanCalculatorTest
         [TestMethod]
         public void TestCheckNumeralConcatedTrue()
         {
-            List<string> TestCases = new List<string>() { "MDCLXVI", "MMMDXXXIII", "CIV", "CIX", "CML", "XIV", "MMMCMXCIX", "XCV", "CMX", "CMIV" };
+            List<string> TestCases = new List<string>() { "MDCLXVI", "MMMDXXXIII", "CIV", "CIX", "CML", "XIV", "MMMCMXCIX", "XCV", "CMX", "CMIV", "CDXC", "CDL", "XLV" };
 
             for (int i = 0; i < TestCases.Count; i++)
             {
@@ -53,7 +53,7 @@ namespace RomanCalculatorTest
         [TestMethod]
         public void TestCheckNumeralConcatedFalse()
         {
-            List<string> TestCases = new List<string>() { "MDCLVXI", "MMMDXMXXIII", "CIVD", "CIM", "CMD", "XIL", "MMMCVXCIX", "XCX", "CMC", "CMCD", "IIII", "VV", "XXXX", "LL", "CCCC", "DD", "" };
+            List<string> TestCases = new List<string>() { "MDCLVXI", "MMMDXMXXIII", "CIVD", "CIM", "CMD", "XIL", "MMMCVXCIX", "XCX", "CMC", "CMCD", "IIII", "VV", "XXXX", "LL", "CCCC", "DD", "AAWDF", "CQ","AMM", "" };
 
             for (int i = 0; i < TestCases.Count; i++)
             {

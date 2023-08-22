@@ -22,9 +22,10 @@ namespace RomanCalculator.Class
         /// </summary>
         private List<int> MaximumNumberOfRepeats { get; set; }
 
+        // ToDo: create a symbol class where every symbol contains rules on how it can be combined
         public bool CheckNumeral(string number)
         {
-            if(number == "")
+            if (number == "")
             {
                 return false;
             }
@@ -47,23 +48,25 @@ namespace RomanCalculator.Class
                 // Check if this was the last symbol
                 if (i < number.Length - 1)
                 {
-                    // If not the last symbol check if next symbol is NOT the same or a valid following symbol (right of the current symbol)
+                    // check if next symbol has a higher value than the current value, no need to check for repeat, was checked above
                     if (ValidSymbols.IndexOf(_tmp) > ValidSymbols.IndexOf(number[i + 1].ToString()))
                     {
                         // Create combined symbol
                         _tmp = _tmp + number[i + 1].ToString();
 
-                        // The next symbol is left of the current one, check if this symbol combined with the next one is valid e.g. I + V = IV
+                        // check if this combined symbol is valid e.g. I + V = IV
                         if (!ValidSymbols.Contains(_tmp))
                         {
                             return false;
                         }
 
-                        // Check if symbol after combined is right of the current symbol. Another combined symbol would not be valid, so no need to check
+                        // Check if there is another symbol after the combined symbol
                         if (i < number.Length - 2)
                         {
-                            // After a combined value the next valid value shifts by 3
-                            if (ValidSymbols.IndexOf(_tmp) >= ValidSymbols.IndexOf(number[i + 2].ToString()) - 3)
+                            // After a combined value the next symbol following in value is not allowed
+                            // any symbol appearing in the combined symbol is not allowed
+                            // This is roman numerals specific and needs to be changed for other systems
+                            if (ValidSymbols.IndexOf(_tmp) >= ValidSymbols.IndexOf(number[i + 2].ToString()) - 1 || _tmp.Contains(number[i + 2]))
                             {
                                 return false;
                             }
