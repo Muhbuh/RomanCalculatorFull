@@ -75,11 +75,11 @@ public class RomanCalculatorController : ControllerBase
             success = false;
             text = "Value needs to be between I and MMMCMXCIX";
         }
-        else if(numberType == 1 && Int32.TryParse(number, out _)) // Safety Parse
+        else if (numberType == 1 && Int32.TryParse(number, out _)) // Safety Parse
         {
             int _tmp = Int32.Parse(number); //Always works, since TryParse was successful before
 
-            if(_tmp < 1 || _tmp > 4000)
+            if (_tmp < 1 || _tmp > 4000)
             {
                 success = false;
                 text = "Value needs to be between 1 and 4000";
@@ -104,7 +104,7 @@ public class RomanCalculatorController : ControllerBase
             InitLogic();
         }
 
-        if(oldType == 0)
+        if (oldType == 0)
         {
             if (Checker.CheckNumeral(summand1))
             {
@@ -116,7 +116,7 @@ public class RomanCalculatorController : ControllerBase
                 field2 = ConvertFromTypeToType(summand2, oldType, newType);
             }
 
-            if(Checker.CheckNumeral(result))
+            if (Checker.CheckNumeral(result))
             {
                 field3 = ConvertFromTypeToType(result, oldType, newType);
             }
@@ -126,7 +126,7 @@ public class RomanCalculatorController : ControllerBase
             int _tmp = 0;
             if (Int32.TryParse(summand1, out _tmp))
             {
-                if(_tmp > 0 && _tmp < 4000)
+                if (_tmp > 0 && _tmp < 4000)
                 {
                     field1 = ConvertFromTypeToType(summand1, oldType, newType);
                 }
@@ -162,9 +162,11 @@ public class RomanCalculatorController : ControllerBase
     /// <param name="newType"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
+    /// Change the whole logic: Always convert to Arabic first and then to target
+    /// This way there is no Quadratic growth for each new number type
     private string ConvertFromTypeToType(string number, int oldType, int newType)
     {
-        if(number == "")
+        if (number == "")
         {
             return "";
         }
@@ -216,7 +218,19 @@ public class RomanCalculatorController : ControllerBase
 
         if (text.Contains("MMMM"))
         {
-            text = "Sum exceeds limit of MMMCMXCIX";
+            string _limit = "MMMCMXCIX";
+            switch (numberType)
+            {
+                case 0:
+                    break;
+                case 1:
+                    _limit = "3999";
+                    break;
+                default:
+                    break;
+            }
+
+            text = $"Sum exceeds limit of {_limit}";
             success = false;
         }
         else
